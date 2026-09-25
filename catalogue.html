@@ -381,7 +381,7 @@
       return `
         <div class="product-card" data-cat="${prod.category}">
           <div class="product-img">
-            <img src="${prod.image || 'https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg'}" alt="${prod.name}" loading="lazy">
+            <img src="${prod.image || 'https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg'}" alt="${prod.name}" loading="lazy" onerror="this.onerror=null;this.src='https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg'">
             ${prod.badge ? `<span class="product-badge">${prod.badge}</span>` : ''}
             <span class="product-price-tag">${priceFormatted}</span>
           </div>

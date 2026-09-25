@@ -607,20 +607,34 @@ CREATE POLICY "Allow Write" ON public.products FOR ALL USING (true);</div>
     location.reload();
   }
 
-  // ===== PRESET IMAGES =====
+  // ===== PRESET IMAGES (26 Photos Réelles SMAPEC) =====
   const PRESET_IMAGES = [
-    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754205/photo_2026-09-18_17-21-04_i1mftz.jpg",
-    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754203/photo_2026-09-18_17-21-01_1_i8btyl.jpg",
-    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754070/photo_13_2026-09-18_17-53-40_dffc6p.jpg",
-    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754200/photo_2026-09-18_17-20-49_w52fof.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754519/photo_2026-09-18_17-20-23_nqtvp6.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754212/photo_2026-09-18_17-20-46_sfuxeh.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754503/photo_2026-09-18_17-20-37_fburgd.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754515/photo_2026-09-18_17-20-31_dkwued.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754080/photo_11_2026-09-18_17-53-40_sbyyqf.jpg",
     "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754075/photo_15_2026-09-18_17-53-40_cn0x5z.jpg",
-    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754064/photo_17_2026-09-18_17-53-40_f85i5h.jpg",
-    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754207/photo_2026-09-18_17-21-06_xaxzjh.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754053/photo_22_2026-09-18_17-53-40_s75w8g.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754050/photo_23_2026-09-18_17-53-40_g5lswr.jpg",
     "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754066/photo_16_2026-09-18_17-53-40_a3kik6.jpg",
-    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754089/photo_10_2026-09-18_17-53-40_bmtcfo.jpg",
-    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754079/photo_14_2026-09-18_17-53-40_j52n0b.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754083/photo_12_2026-09-18_17-53-40_zo4d06.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754077/photo_13_2026-09-18_17-53-40_e5prwm.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754072/photo_14_2026-09-18_17-53-40_qvmc5k.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754101/photo_4_2026-09-18_17-53-40_rbaf1s.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754098/photo_7_2026-09-18_17-53-40_a9sy3i.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754069/photo_17_2026-09-18_17-53-40_akho4f.jpg",
     "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754209/photo_2026-09-18_17-20-53_x2tbgs.jpg",
-    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754093/photo_9_2026-09-18_17-53-40_eap5m2.jpg"
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754089/photo_10_2026-09-18_17-53-40_bmtcfo.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754092/photo_8_2026-09-18_17-53-40_sxc91j.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754086/photo_9_2026-09-18_17-53-40_i2gmyv.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754064/photo_18_2026-09-18_17-53-40_ik0yfx.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754061/photo_19_2026-09-18_17-53-40_h8ugaj.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754054/photo_20_2026-09-18_17-53-40_kuybjp.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754047/photo_1_2026-09-18_17-53-40_aq2knc.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754040/photo_5_2026-09-18_17-53-40_vffxi9.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754041/photo_2_2026-09-18_17-53-40_lkeljs.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754045/photo_3_2026-09-18_17-53-40_repvym.jpg"
   ];
 
   let uploadedImageData = null; // base64 of phone-uploaded image

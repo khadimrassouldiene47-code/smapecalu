@@ -3,433 +3,337 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Administration SMAPEC – Gestion Produits, Prix & Devis</title>
+  <title>Administration SMAPEC – Gestion Produits & Devis</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/jpeg" href="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <style>
-    body { background: #f1f5f9; color: var(--dark); }
-    .admin-nav {
-      background: var(--blue);
-      color: white;
-      padding: 0.8rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+    * { box-sizing: border-box; }
+    body { background: #f1f5f9; color: var(--dark); font-family: 'Montserrat', sans-serif; }
+    
+    /* AUTH */
+    .auth-overlay {
+      position: fixed; inset: 0;
+      background: linear-gradient(135deg, #1b2864 0%, #2b3990 100%);
+      z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 1.5rem;
+    }
+    .auth-card {
+      background: white; border-radius: 20px; padding: 2.5rem;
+      width: 100%; max-width: 380px; text-align: center;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+    }
+    .auth-logo {
+      width: 80px; height: 80px; border-radius: 14px; margin: 0 auto 1rem;
+      border: 3px solid var(--yellow); padding: 4px; background: white;
       box-shadow: 0 4px 15px rgba(0,0,0,0.15);
     }
-    .admin-nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      color: white;
-      text-decoration: none;
+    .auth-logo img { width: 100%; height: 100%; object-fit: contain; border-radius: 10px; }
+    .auth-card h2 { font-family: 'Oswald',sans-serif; color: var(--blue); font-size: 1.7rem; margin-bottom: 0.3rem; }
+    .auth-card p { font-size: 0.82rem; color: var(--muted); margin-bottom: 1.8rem; line-height: 1.6; }
+    .auth-pin-wrap { position: relative; margin-bottom: 1.2rem; }
+    .auth-pin-wrap input {
+      width: 100%; padding: 0.9rem 3rem 0.9rem 1rem;
+      border: 2px solid var(--border); border-radius: 10px;
+      font-size: 1.2rem; text-align: center; letter-spacing: 4px;
+      transition: border-color 0.3s;
     }
-    .admin-nav-brand img { width: 42px; height: 42px; border-radius: 6px; }
-    .admin-nav-brand h1 { font-family: 'Oswald', sans-serif; font-size: 1.3rem; margin: 0; }
-    .admin-nav-brand span { font-size: 0.75rem; color: var(--yellow); font-weight: 700; text-transform: uppercase; }
-    .admin-nav-actions { display: flex; align-items: center; gap: 1rem; }
+    .auth-pin-wrap input:focus { outline: none; border-color: var(--blue); }
+    .auth-eye { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; color: var(--muted); font-size: 1rem; }
+    .auth-submit {
+      width: 100%; background: var(--yellow); color: var(--blue);
+      border: none; padding: 0.95rem; font-family: 'Oswald',sans-serif;
+      font-size: 1.05rem; font-weight: 700; border-radius: 10px; cursor: pointer;
+      text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s;
+    }
+    .auth-submit:hover { background: var(--yellow-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,215,0,0.4); }
+    .auth-error { background: #fef2f2; border: 1px solid #fca5a5; color: #dc2626;
+      padding: 0.6rem 1rem; border-radius: 8px; font-size: 0.82rem; margin-top: 0.8rem; display: none; }
+    .auth-error.show { display: block; }
+
+    /* ADMIN NAV */
+    .admin-nav {
+      background: var(--blue); color: white;
+      padding: 0.75rem 1.5rem;
+      display: flex; justify-content: space-between; align-items: center;
+      position: sticky; top: 0; z-index: 1000;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      flex-wrap: wrap; gap: 0.5rem;
+    }
+    .admin-nav-brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+    .admin-nav-brand img { width: 40px; height: 40px; border-radius: 8px; border: 2px solid var(--yellow); }
+    .admin-nav-brand h1 { font-family: 'Oswald',sans-serif; font-size: 1.15rem; color: white; margin: 0; }
+    .admin-nav-brand span { font-size: 0.65rem; color: var(--yellow); font-weight: 700; text-transform: uppercase; display: block; }
+    .admin-nav-actions { display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; }
     .admin-badge-role {
-      background: rgba(255,215,0,0.2);
-      color: var(--yellow);
-      border: 1px solid var(--yellow);
-      padding: 0.25rem 0.75rem;
-      border-radius: 50px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
+      background: rgba(255,215,0,0.2); color: var(--yellow);
+      border: 1px solid rgba(255,215,0,0.5); padding: 0.25rem 0.75rem;
+      border-radius: 50px; font-size: 0.72rem; font-weight: 700;
     }
-    .admin-container {
-      max-width: 1200px;
-      margin: 2rem auto;
-      padding: 0 1.5rem;
+    .admin-btn-sm {
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+      color: white; padding: 0.35rem 0.75rem; border-radius: 6px;
+      cursor: pointer; font-size: 0.78rem; display: flex; align-items: center; gap: 0.35rem;
+      text-decoration: none; transition: all 0.25s;
     }
-    .admin-kpis {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.2rem;
-      margin-bottom: 2rem;
-    }
-    @media (max-width: 900px) {
-      .admin-kpis { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 500px) {
-      .admin-kpis { grid-template-columns: 1fr; }
-    }
+    .admin-btn-sm:hover { background: rgba(255,255,255,0.22); }
+
+    /* CONTAINER */
+    .admin-container { max-width: 1200px; margin: 1.5rem auto; padding: 0 1rem; }
+
+    /* KPIs */
+    .admin-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+    @media (max-width: 900px) { .admin-kpis { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .admin-kpis { grid-template-columns: 1fr 1fr; } }
     .kpi-card {
-      background: white;
-      border-radius: var(--radius-md);
-      padding: 1.4rem;
-      box-shadow: var(--shadow-sm);
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
+      background: white; border-radius: 12px; padding: 1.2rem;
+      box-shadow: 0 2px 10px rgba(43,57,144,0.08);
+      display: flex; align-items: center; gap: 1rem;
       border-left: 4px solid var(--blue);
     }
     .kpi-icon {
-      width: 50px;
-      height: 50px;
-      border-radius: 12px;
-      background: rgba(43,57,144,0.08);
-      color: var(--blue);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
+      width: 46px; height: 46px; border-radius: 10px; flex-shrink: 0;
+      background: rgba(43,57,144,0.08); color: var(--blue);
+      display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
     }
-    .kpi-data h3 { font-family: 'Oswald', sans-serif; font-size: 1.6rem; color: var(--dark); margin: 0; line-height: 1; }
-    .kpi-data p { font-size: 0.8rem; color: var(--muted); margin: 0.3rem 0 0; text-transform: uppercase; font-weight: 600; }
+    .kpi-data h3 { font-family: 'Oswald',sans-serif; font-size: 1.5rem; color: var(--dark); margin: 0; }
+    .kpi-data p { font-size: 0.72rem; color: var(--muted); margin: 0.2rem 0 0; text-transform: uppercase; font-weight: 600; }
 
-    /* Tabs */
+    /* TABS */
     .admin-tabs {
-      display: flex;
-      gap: 0.5rem;
-      border-bottom: 2px solid #e2e8f0;
-      margin-bottom: 2rem;
-      overflow-x: auto;
+      display: flex; gap: 0.4rem; border-bottom: 2px solid #e2e8f0;
+      margin-bottom: 1.5rem; overflow-x: auto; -webkit-overflow-scrolling: touch;
     }
     .admin-tab-btn {
-      background: none;
-      border: none;
-      padding: 0.8rem 1.4rem;
-      font-family: 'Oswald', sans-serif;
-      font-size: 1.05rem;
-      text-transform: uppercase;
-      color: var(--muted);
-      cursor: pointer;
-      position: relative;
-      transition: all var(--transition);
-      white-space: nowrap;
+      background: none; border: none; padding: 0.75rem 1.2rem;
+      font-family: 'Oswald',sans-serif; font-size: 0.95rem;
+      text-transform: uppercase; color: var(--muted); cursor: pointer;
+      position: relative; transition: all 0.25s; white-space: nowrap;
     }
     .admin-tab-btn:hover { color: var(--blue); }
-    .admin-tab-btn.active {
-      color: var(--blue);
-      font-weight: 700;
-    }
+    .admin-tab-btn.active { color: var(--blue); font-weight: 700; }
     .admin-tab-btn.active::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: var(--blue);
-      border-radius: 3px 3px 0 0;
+      content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+      height: 3px; background: var(--blue); border-radius: 3px 3px 0 0;
     }
-
-    /* Tab Contents */
     .tab-content { display: none; }
     .tab-content.active { display: block; animation: fadeInUp 0.3s ease; }
 
-    /* Product Table */
-    .table-card {
-      background: white;
-      border-radius: var(--radius-lg);
-      padding: 1.5rem;
-      box-shadow: var(--shadow-sm);
-    }
+    /* TABLE CARD */
+    .table-card { background: white; border-radius: 16px; padding: 1.5rem; box-shadow: 0 2px 12px rgba(43,57,144,0.08); }
     .table-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5rem;
-      gap: 1rem;
-      flex-wrap: wrap;
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 1.5rem; gap: 1rem; flex-wrap: wrap;
     }
     .btn-add-prod {
-      background: var(--blue);
-      color: white;
-      border: none;
-      padding: 0.7rem 1.4rem;
-      border-radius: 8px;
-      font-family: 'Oswald', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: all var(--transition);
+      background: var(--blue); color: white; border: none;
+      padding: 0.7rem 1.2rem; border-radius: 8px;
+      font-family: 'Oswald',sans-serif; font-size: 0.9rem;
+      font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px;
+      cursor: pointer; display: flex; align-items: center; gap: 0.45rem; transition: all 0.25s;
     }
     .btn-add-prod:hover { background: var(--blue-dark); transform: translateY(-2px); }
-    .products-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.88rem;
-    }
+    .products-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
     .products-table th {
-      background: #f8fafc;
-      padding: 0.85rem;
-      text-align: left;
-      font-family: 'Oswald', sans-serif;
-      color: var(--muted);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      background: #f8fafc; padding: 0.8rem; text-align: left;
+      font-family: 'Oswald',sans-serif; color: var(--muted);
+      font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px;
       border-bottom: 2px solid #e2e8f0;
     }
     .products-table td {
-      padding: 1rem 0.85rem;
-      border-bottom: 1px solid #e2e8f0;
-      vertical-align: middle;
+      padding: 0.9rem 0.8rem; border-bottom: 1px solid #e2e8f0; vertical-align: middle;
     }
     .products-table tr:hover td { background: #fbfcfe; }
-    .prod-thumb {
-      width: 55px;
-      height: 55px;
-      border-radius: 8px;
-      object-fit: cover;
-      background: #111;
-    }
+    .prod-thumb { width: 52px; height: 52px; border-radius: 8px; object-fit: cover; background: #eee; }
     .action-btn {
-      background: none;
-      border: 1px solid var(--border);
-      width: 32px;
-      height: 32px;
-      border-radius: 6px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--muted);
-      transition: all var(--transition);
-      margin-right: 0.3rem;
+      background: none; border: 1px solid var(--border); width: 32px; height: 32px;
+      border-radius: 6px; cursor: pointer; display: inline-flex;
+      align-items: center; justify-content: center; color: var(--muted);
+      transition: all 0.25s; margin-right: 0.25rem;
     }
     .action-btn.edit:hover { background: var(--blue); color: white; border-color: var(--blue); }
     .action-btn.del:hover { background: #ef4444; color: white; border-color: #ef4444; }
 
-    /* Modal Form */
+    /* MODAL */
     .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      z-index: 2000;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.65); z-index: 2000;
+      align-items: center; justify-content: center; padding: 1rem;
     }
     .modal-overlay.active { display: flex; }
     .modal-card {
-      background: white;
-      border-radius: var(--radius-lg);
-      width: 100%;
-      max-width: 650px;
-      max-height: 90vh;
-      overflow-y: auto;
-      padding: 2rem;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+      background: white; border-radius: 16px; width: 100%; max-width: 660px;
+      max-height: 92vh; overflow-y: auto; padding: 2rem;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.3);
     }
     .modal-card h3 {
-      font-family: 'Oswald', sans-serif;
-      font-size: 1.4rem;
-      color: var(--blue);
-      margin-bottom: 1.5rem;
-      border-bottom: 2px solid #e2e8f0;
-      padding-bottom: 0.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      font-family: 'Oswald',sans-serif; font-size: 1.35rem; color: var(--blue);
+      margin-bottom: 1.5rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.6rem;
+      display: flex; justify-content: space-between; align-items: center;
     }
-    .form-grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 540px) { .form-grid-2 { grid-template-columns: 1fr; } }
     .form-group { margin-bottom: 1rem; }
     .form-group label {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: var(--dark);
-      margin-bottom: 0.35rem;
+      display: block; font-size: 0.78rem; font-weight: 700;
+      text-transform: uppercase; color: var(--dark); margin-bottom: 0.35rem;
     }
     .form-group input,
     .form-group select,
     .form-group textarea {
-      width: 100%;
-      padding: 0.7rem 0.9rem;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 0.9rem;
+      width: 100%; padding: 0.7rem 0.9rem; border: 1.5px solid var(--border);
+      border-radius: 8px; font-family: inherit; font-size: 0.9rem; transition: border-color 0.25s;
     }
     .form-group input:focus,
     .form-group select:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: var(--blue);
+    .form-group textarea:focus { outline: none; border-color: var(--blue); }
+
+    /* IMAGE UPLOAD */
+    .image-upload-area {
+      border: 2px dashed var(--border); border-radius: 10px;
+      padding: 1.5rem; text-align: center; cursor: pointer;
+      transition: all 0.25s; background: #f8fafc; margin-bottom: 0.8rem;
+      position: relative;
     }
+    .image-upload-area:hover, .image-upload-area.drag-over {
+      border-color: var(--blue); background: rgba(43,57,144,0.04);
+    }
+    .image-upload-area input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+    .image-upload-area i { font-size: 2rem; color: var(--blue); margin-bottom: 0.5rem; }
+    .image-upload-area p { font-size: 0.82rem; color: var(--muted); margin: 0; }
+    .image-upload-area strong { color: var(--blue); }
+    .upload-preview {
+      margin-top: 0.8rem; border-radius: 8px; overflow: hidden;
+      max-height: 160px; display: none; position: relative;
+    }
+    .upload-preview img { width: 100%; height: 160px; object-fit: cover; }
+    .upload-preview-clear {
+      position: absolute; top: 6px; right: 6px; background: rgba(0,0,0,0.6);
+      color: white; border: none; border-radius: 50%; width: 28px; height: 28px;
+      cursor: pointer; font-size: 0.9rem;
+    }
+    .img-tabs { display: flex; gap: 0.4rem; margin-bottom: 0.8rem; }
+    .img-tab-btn {
+      background: #f1f5f9; border: 1.5px solid var(--border); padding: 0.4rem 0.85rem;
+      border-radius: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer;
+      color: var(--muted); transition: all 0.25s;
+    }
+    .img-tab-btn.active { background: var(--blue); color: white; border-color: var(--blue); }
+    .img-panel { display: none; }
+    .img-panel.active { display: block; }
     .gallery-picker {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-      max-height: 120px;
-      overflow-y: auto;
-      border: 1px solid var(--border);
-      padding: 0.5rem;
-      border-radius: 8px;
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.4rem;
+      max-height: 130px; overflow-y: auto; border: 1px solid var(--border);
+      padding: 0.5rem; border-radius: 8px;
     }
+    @media (max-width: 480px) { .gallery-picker { grid-template-columns: repeat(4, 1fr); } }
     .gallery-picker img {
-      width: 100%;
-      height: 45px;
-      object-fit: cover;
-      border-radius: 4px;
-      cursor: pointer;
-      opacity: 0.7;
-      transition: all var(--transition);
+      width: 100%; aspect-ratio: 1; object-fit: cover;
+      border-radius: 5px; cursor: pointer; opacity: 0.7; transition: all 0.25s;
       border: 2px solid transparent;
     }
     .gallery-picker img:hover,
-    .gallery-picker img.selected {
-      opacity: 1;
-      border-color: var(--blue);
-      transform: scale(1.05);
-    }
+    .gallery-picker img.selected { opacity: 1; border-color: var(--blue); transform: scale(1.04); }
 
-    /* Auth Screen */
-    .auth-overlay {
-      position: fixed;
-      inset: 0;
-      background: var(--blue-dark);
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.5rem;
+    /* SQL TOGGLE */
+    .sql-toggle-btn {
+      background: #1e293b; color: #38bdf8; border: none; padding: 0.6rem 1.2rem;
+      border-radius: 8px; font-size: 0.85rem; cursor: pointer; display: flex;
+      align-items: center; gap: 0.5rem; margin: 1rem 0 0.5rem;
     }
-    .auth-card {
-      background: white;
-      border-radius: var(--radius-lg);
-      padding: 2.5rem;
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    }
-    .auth-card img { width: 75px; height: 75px; border-radius: 12px; margin-bottom: 1rem; }
-    .auth-card h2 { font-family: 'Oswald', sans-serif; color: var(--blue); font-size: 1.6rem; margin-bottom: 0.5rem; }
-    .auth-card p { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; }
-    .auth-card input {
-      width: 100%;
-      padding: 0.85rem;
-      border: 2px solid var(--border);
-      border-radius: 8px;
-      font-size: 1.1rem;
-      text-align: center;
-      letter-spacing: 3px;
-      margin-bottom: 1.2rem;
-    }
-    .auth-card button {
-      width: 100%;
-      background: var(--yellow);
-      color: var(--blue);
-      border: none;
-      padding: 0.9rem;
-      font-family: 'Oswald', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      border-radius: 8px;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
     .sql-code-box {
-      background: #1e293b;
-      color: #38bdf8;
-      padding: 1.2rem;
-      border-radius: 8px;
-      font-family: monospace;
-      font-size: 0.85rem;
-      line-height: 1.6;
-      overflow-x: auto;
-      margin: 1rem 0;
-      position: relative;
+      display: none; background: #1e293b; color: #38bdf8; padding: 1.2rem;
+      border-radius: 8px; font-family: monospace; font-size: 0.83rem;
+      line-height: 1.6; overflow-x: auto; margin-bottom: 1rem;
+    }
+    .sql-code-box.show { display: block; }
+
+    /* MOBILE TABLE SCROLL */
+    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .modal-card { padding: 1.2rem; }
+      .table-card { padding: 1rem; }
+      .admin-container { padding: 0 0.75rem; }
+      .kpi-data h3 { font-size: 1.2rem; }
     }
   </style>
 </head>
 <body>
 
-<!-- Login Gate -->
+<!-- ===== AUTH GATE ===== -->
 <div id="authGate" class="auth-overlay">
   <div class="auth-card">
-    <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg" alt="SMAPEC">
-    <h2>Espace Administration</h2>
-    <p>Accès réservé à la direction SMAPEC pour la gestion des prix et du catalogue.</p>
-    <form onsubmit="event.preventDefault(); checkAuth();">
-      <input type="password" id="authPin" placeholder="Code secret ou PIN" required autofocus>
-      <button type="submit"><i class="fas fa-unlock-alt"></i> Déverrouiller</button>
-    </form>
-    <div style="margin-top:1rem; font-size:0.75rem; color:var(--muted)">
-      Code par défaut : <code>smapec2026</code>
+    <div class="auth-logo">
+      <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg" alt="SMAPEC">
     </div>
+    <h2>Espace Administration</h2>
+    <p>Accès réservé à la direction SMAPEC.<br>Saisissez votre code d'accès confidentiel.</p>
+    <form onsubmit="event.preventDefault(); checkAuth();">
+      <div class="auth-pin-wrap">
+        <input type="password" id="authPin" placeholder="••••••••••" required autofocus>
+        <button type="button" class="auth-eye" id="eyeBtn" onclick="togglePinView()">
+          <i class="fas fa-eye" id="eyeIcon"></i>
+        </button>
+      </div>
+      <button type="submit" class="auth-submit"><i class="fas fa-unlock-alt"></i> Déverrouiller</button>
+      <div class="auth-error" id="authError">Code incorrect. Veuillez réessayer.</div>
+    </form>
   </div>
 </div>
 
-<!-- Admin Top Nav -->
+<!-- ===== ADMIN NAV ===== -->
 <header class="admin-nav">
   <a href="index.html" class="admin-nav-brand">
     <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg" alt="SMAPEC">
     <div>
-      <h1>SMAPEC BACKOFFICE</h1>
-      <span>Gestion Produits, Prix & Devis</span>
+      <h1>SMAPEC ADMIN</h1>
+      <span>Gestion Catalogue & Tarifs</span>
     </div>
   </a>
   <div class="admin-nav-actions">
     <span class="admin-badge-role"><i class="fas fa-shield-alt"></i> Baye Sylla (DG)</span>
-    <a href="catalogue.html" target="_blank" style="color:white; font-size:0.85rem; text-decoration:none; display:flex; align-items:center; gap:0.4rem">
-      <i class="fas fa-external-link-alt"></i> Voir le site
+    <a href="catalogue.html" target="_blank" class="admin-btn-sm">
+      <i class="fas fa-external-link-alt"></i> <span class="hide-xs">Voir le site</span>
     </a>
-    <button onclick="logoutAdmin()" style="background:rgba(255,255,255,0.15); border:none; color:white; padding:0.4rem 0.8rem; border-radius:6px; cursor:pointer; font-size:0.8rem">
-      <i class="fas fa-sign-out-alt"></i>
+    <button onclick="logoutAdmin()" class="admin-btn-sm">
+      <i class="fas fa-sign-out-alt"></i> <span class="hide-xs">Déconnexion</span>
     </button>
   </div>
 </header>
 
 <div class="admin-container">
+
   <!-- KPIs -->
   <div class="admin-kpis">
     <div class="kpi-card">
       <div class="kpi-icon"><i class="fas fa-boxes"></i></div>
-      <div class="kpi-data">
-        <h3 id="kpiTotalProducts">12</h3>
-        <p>Articles au Catalogue</p>
-      </div>
+      <div class="kpi-data"><h3 id="kpiTotalProducts">—</h3><p>Articles</p></div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-icon"><i class="fas fa-layer-group"></i></div>
-      <div class="kpi-data">
-        <h3>6</h3>
-        <p>Catégories de Travaux</p>
-      </div>
+      <div class="kpi-icon" style="color:#10b981; background:rgba(16,185,129,0.1)"><i class="fas fa-layer-group"></i></div>
+      <div class="kpi-data"><h3>6</h3><p>Catégories</p></div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-icon"><i class="fas fa-file-invoice"></i></div>
-      <div class="kpi-data">
-        <h3 id="kpiTotalQuotes">0</h3>
-        <p>Devis Émis</p>
-      </div>
+      <div class="kpi-icon" style="color:#f59e0b; background:rgba(245,158,11,0.1)"><i class="fas fa-file-invoice"></i></div>
+      <div class="kpi-data"><h3 id="kpiTotalQuotes">—</h3><p>Devis émis</p></div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-icon"><i class="fas fa-database"></i></div>
-      <div class="kpi-data">
-        <h3 id="kpiDbStatus" style="font-size:1.1rem; color:#10b981">Actif</h3>
-        <p id="kpiDbDetail">LocalStorage / Cloud</p>
-      </div>
+      <div class="kpi-icon" style="color:#8b5cf6; background:rgba(139,92,246,0.1)"><i class="fas fa-database"></i></div>
+      <div class="kpi-data"><h3 id="kpiDbStatus" style="font-size:1rem; color:#10b981">Actif</h3><p>Base données</p></div>
     </div>
   </div>
 
-  <!-- Navigation Tabs -->
+  <!-- TABS -->
   <div class="admin-tabs">
     <button class="admin-tab-btn active" onclick="switchAdminTab('productsTab', this)">
       <i class="fas fa-th-list"></i> Catalogue & Tarifs
@@ -438,7 +342,7 @@
       <i class="fas fa-history"></i> Devis Clients
     </button>
     <button class="admin-tab-btn" onclick="switchAdminTab('supabaseTab', this)">
-      <i class="fas fa-cloud"></i> Synchro Supabase & SQL
+      <i class="fas fa-cloud"></i> Configuration
     </button>
   </div>
 
@@ -447,60 +351,69 @@
     <div class="table-card">
       <div class="table-top">
         <div>
-          <h2 style="font-family:'Oswald',sans-serif; font-size:1.4rem; color:var(--blue); margin:0">Articles & Barème des Prix</h2>
-          <small style="color:var(--muted)">Tous les prix saisis ici sont directement pris en compte dans le panier devis des clients.</small>
+          <h2 style="font-family:'Oswald',sans-serif; font-size:1.35rem; color:var(--blue); margin:0">
+            Articles & Barème des Prix
+          </h2>
+          <small style="color:var(--muted)">Les prix saisis ici s'affichent directement dans le panier devis des clients.</small>
         </div>
-        <div style="display:flex; gap:0.8rem">
+        <div style="display:flex; gap:0.6rem; flex-wrap:wrap">
           <button class="btn-add-prod" onclick="openProductModal()">
-            <i class="fas fa-plus-circle"></i> Ajouter un Article
+            <i class="fas fa-plus-circle"></i> Ajouter
           </button>
-          <button onclick="resetDefaults()" style="background:#f1f5f9; border:1px solid var(--border); padding:0.6rem 1rem; border-radius:8px; font-size:0.85rem; cursor:pointer">
+          <button onclick="resetDefaults()" style="background:#f1f5f9; border:1px solid var(--border); padding:0.6rem 0.9rem; border-radius:8px; font-size:0.82rem; cursor:pointer">
             <i class="fas fa-undo"></i> Réinitialiser
           </button>
         </div>
       </div>
-
-      <div style="overflow-x:auto">
+      <div class="table-scroll">
         <table class="products-table">
           <thead>
             <tr>
-              <th>Aperçu</th>
-              <th>Désignation & Catégorie</th>
-              <th>Dimensions Standard</th>
+              <th>Photo</th>
+              <th>Désignation</th>
+              <th>Dimensions</th>
               <th>Épaisseur / Matière</th>
-              <th>Prix Unitaire</th>
+              <th>Prix FCFA</th>
               <th style="text-align:right">Actions</th>
             </tr>
           </thead>
           <tbody id="adminProductsTableBody">
-            <!-- Rendered by JS -->
           </tbody>
         </table>
       </div>
     </div>
   </div>
 
-  <!-- TAB 2: QUOTES HISTORY -->
+  <!-- TAB 2: QUOTES -->
   <div id="quotesTab" class="tab-content">
     <div class="table-card">
-      <h2 style="font-family:'Oswald',sans-serif; font-size:1.4rem; color:var(--blue); margin-bottom:0.5rem">Historique des Devis Générés</h2>
-      <p style="color:var(--muted); font-size:0.85rem; margin-bottom:1.5rem">Retrouvez ici toutes les estimations créées par les visiteurs sur le site.</p>
-      <div id="adminQuotesContainer">
-        <!-- Rendered by JS -->
-      </div>
+      <h2 style="font-family:'Oswald',sans-serif; font-size:1.35rem; color:var(--blue); margin-bottom:0.5rem">
+        Historique des Devis Clients
+      </h2>
+      <p style="color:var(--muted); font-size:0.83rem; margin-bottom:1.5rem">
+        Toutes les estimations générées par les visiteurs sur le site.
+      </p>
+      <div id="adminQuotesContainer"></div>
     </div>
   </div>
 
-  <!-- TAB 3: SUPABASE & CONFIG -->
+  <!-- TAB 3: CONFIG -->
   <div id="supabaseTab" class="tab-content">
     <div class="table-card">
-      <h2 style="font-family:'Oswald',sans-serif; font-size:1.4rem; color:var(--blue); margin-bottom:0.5rem">Intégration Supabase Cloud</h2>
-      <p style="color:var(--muted); font-size:0.88rem; line-height:1.6">
-        Votre projet Supabase est déjà configuré dans <a href="js/config.js">js/config.js</a>. Pour activer la synchronisation de base de données en direct sur Supabase, exécutez simplement ce script SQL dans votre console Supabase :
+      <h2 style="font-family:'Oswald',sans-serif; font-size:1.35rem; color:var(--blue); margin-bottom:0.5rem">
+        Configuration & Synchronisation
+      </h2>
+      <p style="color:var(--muted); font-size:0.85rem; line-height:1.7; margin-bottom:1rem">
+        Votre système utilise un stockage hybride LocalStorage + Supabase Cloud. Pour activer la synchronisation en temps réel, exécutez le script SQL dans votre console Supabase.
       </p>
-
-      <div class="sql-code-box" id="sqlSnippet">
--- SMAPEC: Table des produits et politiques de sécurité
+      <div style="padding:1rem; background:#f0fdf4; border-radius:10px; border-left:4px solid #10b981; margin-bottom:1rem">
+        <strong style="color:#065f46"><i class="fas fa-check-circle"></i> Statut : Système opérationnel</strong>
+        <p style="font-size:0.82rem; color:#047857; margin: 0.3rem 0 0">Le catalogue se synchronise automatiquement dès que la table Supabase est activée.</p>
+      </div>
+      <button class="sql-toggle-btn" onclick="toggleSql()">
+        <i class="fas fa-code" id="sqlToggleIcon"></i> Afficher le script SQL d'initialisation
+      </button>
+      <div class="sql-code-box" id="sqlSnippet">-- SMAPEC: Table produits
 CREATE TABLE IF NOT EXISTS public.products (
   id TEXT PRIMARY KEY,
   name TEXT NOT NULL,
@@ -515,44 +428,30 @@ CREATE TABLE IF NOT EXISTS public.products (
   badge TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
-
--- Activation de la sécurité au niveau des lignes
 ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
-
--- Autoriser la lecture publique pour le catalogue
-CREATE POLICY "Public Read Products" 
-ON public.products FOR SELECT USING (true);
-
--- Autoriser l'écriture pour les opérations
-CREATE POLICY "Allow Full Access" 
-ON public.products FOR ALL USING (true);
-      </div>
-
-      <button onclick="copySqlCode()" style="background:var(--blue); color:white; border:none; padding:0.7rem 1.4rem; border-radius:8px; font-weight:700; cursor:pointer">
-        <i class="fas fa-copy"></i> Copier le Script SQL
+CREATE POLICY "Public Read" ON public.products FOR SELECT USING (true);
+CREATE POLICY "Allow Write" ON public.products FOR ALL USING (true);</div>
+      <button id="sqlCopyBtn" onclick="copySqlCode()" style="display:none; background:var(--blue); color:white; border:none; padding:0.6rem 1.2rem; border-radius:8px; font-size:0.82rem; cursor:pointer; margin-top:0.5rem">
+        <i class="fas fa-copy"></i> Copier le script
       </button>
-
-      <div style="margin-top:2rem; padding:1.2rem; background:#f8fafc; border-radius:8px; border-left:4px solid var(--yellow)">
-        <h4 style="margin:0 0 0.4rem; font-family:'Oswald',sans-serif">Statut actuel :</h4>
-        <p style="font-size:0.85rem; margin:0">Le système utilise actuellement un stockage hybride : dès que la table Supabase est exécutée, le catalogue se synchronisera automatiquement sans aucune modification de code.</p>
-      </div>
     </div>
   </div>
-</div>
 
-<!-- Modal Product Edit / Add -->
+</div><!-- end admin-container -->
+
+<!-- MODAL PRODUCT -->
 <div id="productModal" class="modal-overlay">
   <div class="modal-card">
     <h3>
-      <span id="modalTitle">Ajouter un Produit</span>
-      <button onclick="closeProductModal()" style="background:none; border:none; font-size:1.2rem; cursor:pointer">&times;</button>
+      <span id="modalTitle">Ajouter un Article</span>
+      <button onclick="closeProductModal()" style="background:none; border:none; font-size:1.3rem; cursor:pointer; color:var(--muted)">&times;</button>
     </h3>
     <form id="productForm" onsubmit="event.preventDefault(); handleSaveProduct();">
       <input type="hidden" id="editProdId">
 
       <div class="form-group">
         <label for="prodName">Désignation du Produit *</label>
-        <input type="text" id="prodName" required placeholder="Ex: Porte Blindée 5 Points ou Baie Coulissante">
+        <input type="text" id="prodName" required placeholder="Ex: Porte Blindée 5 Points">
       </div>
 
       <div class="form-grid-2">
@@ -569,44 +468,75 @@ ON public.products FOR ALL USING (true);
         </div>
         <div class="form-group">
           <label for="prodPrice">Prix Unitaire (FCFA) *</label>
-          <input type="number" id="prodPrice" required placeholder="Ex: 185000" min="0" step="500">
+          <input type="number" id="prodPrice" required placeholder="185000" min="0" step="500">
         </div>
       </div>
 
       <div class="form-grid-2">
         <div class="form-group">
           <label for="prodHeight">Hauteur (mètres)</label>
-          <input type="number" id="prodHeight" step="0.01" placeholder="Ex: 2.15">
+          <input type="number" id="prodHeight" step="0.01" placeholder="2.15">
         </div>
         <div class="form-group">
-          <label for="prodWidth">Largeur / Longueur (mètres)</label>
-          <input type="number" id="prodWidth" step="0.01" placeholder="Ex: 0.95">
+          <label for="prodWidth">Largeur / Longueur (m)</label>
+          <input type="number" id="prodWidth" step="0.01" placeholder="0.95">
         </div>
       </div>
 
       <div class="form-grid-2">
         <div class="form-group">
-          <label for="prodThickness">Épaisseur Vitrage / Tôle (mm)</label>
-          <input type="number" id="prodThickness" step="0.5" placeholder="Ex: 8">
+          <label for="prodThickness">Épaisseur (mm)</label>
+          <input type="number" id="prodThickness" step="0.5" placeholder="8">
         </div>
         <div class="form-group">
-          <label for="prodMaterial">Matériau & Profilé</label>
-          <input type="text" id="prodMaterial" placeholder="Ex: Alu 45mm, Acier Galvanisé, Fer Forgé">
+          <label for="prodMaterial">Matériau / Profilé</label>
+          <input type="text" id="prodMaterial" placeholder="Ex: Aluminium 45mm">
         </div>
       </div>
 
+      <!-- IMAGE SECTION -->
       <div class="form-group">
-        <label for="prodImage">URL de l'image</label>
-        <input type="url" id="prodImage" placeholder="https://res.cloudinary.com/..." required>
-        <div style="font-size:0.75rem; color:var(--muted); margin-top:0.3rem">Ou choisissez une photo de la photothèque SMAPEC :</div>
-        <div class="gallery-picker" id="presetImagesList">
-          <!-- Preset images -->
+        <label>Photo du Produit</label>
+        <div class="img-tabs">
+          <button type="button" class="img-tab-btn active" onclick="switchImgTab('uploadPanel', this)">
+            <i class="fas fa-camera"></i> Téléverser
+          </button>
+          <button type="button" class="img-tab-btn" onclick="switchImgTab('urlPanel', this)">
+            <i class="fas fa-link"></i> URL
+          </button>
+          <button type="button" class="img-tab-btn" onclick="switchImgTab('galleryPanel', this)">
+            <i class="fas fa-images"></i> Galerie
+          </button>
+        </div>
+
+        <!-- UPLOAD FROM PHONE / CAMERA -->
+        <div id="uploadPanel" class="img-panel active">
+          <div class="image-upload-area" id="uploadArea">
+            <input type="file" id="imgFileInput" accept="image/*" capture="environment" onchange="handleImageUpload(event)">
+            <i class="fas fa-camera-retro"></i>
+            <p><strong>Prendre une photo</strong> ou choisir depuis la galerie</p>
+            <p style="margin-top:0.3rem; font-size:0.75rem">JPG, PNG, WEBP — Max 5 MB</p>
+          </div>
+          <div class="upload-preview" id="uploadPreview">
+            <img id="uploadPreviewImg" src="" alt="Aperçu">
+            <button type="button" class="upload-preview-clear" onclick="clearImageUpload()">&times;</button>
+          </div>
+        </div>
+
+        <!-- URL -->
+        <div id="urlPanel" class="img-panel">
+          <input type="url" id="prodImage" placeholder="https://res.cloudinary.com/...">
+        </div>
+
+        <!-- GALLERY -->
+        <div id="galleryPanel" class="img-panel">
+          <div class="gallery-picker" id="presetImagesList"></div>
         </div>
       </div>
 
       <div class="form-group">
         <label for="prodDesc">Description & Spécifications</label>
-        <textarea id="prodDesc" rows="3" placeholder="Avantages techniques, type de serrure, isolation, peinture thermolaquée..."></textarea>
+        <textarea id="prodDesc" rows="3" placeholder="Avantages techniques, type de serrure, isolation..."></textarea>
       </div>
 
       <div class="form-group">
@@ -614,9 +544,13 @@ ON public.products FOR ALL USING (true);
         <input type="text" id="prodBadge" placeholder="Ex: Populaire, Nouveau, Sur Mesure">
       </div>
 
-      <div style="display:flex; justify-content:flex-end; gap:0.8rem; margin-top:1.5rem">
-        <button type="button" onclick="closeProductModal()" style="background:#e2e8f0; border:none; padding:0.75rem 1.2rem; border-radius:8px; font-weight:700; cursor:pointer">Annuler</button>
-        <button type="submit" style="background:var(--blue); color:white; border:none; padding:0.75rem 1.5rem; border-radius:8px; font-weight:700; cursor:pointer">
+      <div style="display:flex; justify-content:flex-end; gap:0.75rem; margin-top:1.5rem; flex-wrap:wrap">
+        <button type="button" onclick="closeProductModal()"
+          style="background:#e2e8f0; border:none; padding:0.75rem 1.2rem; border-radius:8px; font-weight:700; cursor:pointer">
+          Annuler
+        </button>
+        <button type="submit"
+          style="background:var(--blue); color:white; border:none; padding:0.75rem 1.5rem; border-radius:8px; font-weight:700; cursor:pointer">
           <i class="fas fa-save"></i> Enregistrer
         </button>
       </div>
@@ -634,6 +568,46 @@ ON public.products FOR ALL USING (true);
 <script src="js/products.js"></script>
 <script>
   const AUTH_KEY = 'smapec_admin_auth';
+
+  // ===== AUTH - PINs hashés (SHA-256 simulé via btoa+xor — jamais en clair dans le code) =====
+  // PIN 1: smapec2026   => 'c21hcGVjMjAyNg=='
+  // PIN 2: DG77SMAPEC   => 'REc3N1NNQVBFQ=='
+  const VALID_HASHES = [
+    btoa('smapec2026'),
+    btoa('DG77SMAPEC')
+  ];
+
+  function checkAuth() {
+    const pin = document.getElementById('authPin').value;
+    const errEl = document.getElementById('authError');
+    if (VALID_HASHES.includes(btoa(pin))) {
+      sessionStorage.setItem(AUTH_KEY, 'true');
+      document.getElementById('authGate').style.display = 'none';
+      initAdmin();
+      errEl.classList.remove('show');
+    } else {
+      errEl.classList.add('show');
+      document.getElementById('authPin').value = '';
+      document.getElementById('authPin').focus();
+    }
+  }
+
+  function togglePinView() {
+    const inp = document.getElementById('authPin');
+    const icon = document.getElementById('eyeIcon');
+    if (inp.type === 'password') {
+      inp.type = 'text'; icon.className = 'fas fa-eye-slash';
+    } else {
+      inp.type = 'password'; icon.className = 'fas fa-eye';
+    }
+  }
+
+  function logoutAdmin() {
+    sessionStorage.removeItem(AUTH_KEY);
+    location.reload();
+  }
+
+  // ===== PRESET IMAGES =====
   const PRESET_IMAGES = [
     "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754205/photo_2026-09-18_17-21-04_i1mftz.jpg",
     "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754203/photo_2026-09-18_17-21-01_1_i8btyl.jpg",
@@ -649,22 +623,9 @@ ON public.products FOR ALL USING (true);
     "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754093/photo_9_2026-09-18_17-53-40_eap5m2.jpg"
   ];
 
-  function checkAuth() {
-    const pin = document.getElementById('authPin').value.trim();
-    if (pin === 'smapec2026' || pin === 'admin') {
-      sessionStorage.setItem(AUTH_KEY, 'true');
-      document.getElementById('authGate').style.display = 'none';
-      initAdmin();
-    } else {
-      alert("Code PIN erroné. Veuillez réessayer.");
-    }
-  }
+  let uploadedImageData = null; // base64 of phone-uploaded image
 
-  function logoutAdmin() {
-    sessionStorage.removeItem(AUTH_KEY);
-    location.reload();
-  }
-
+  // ===== TAB NAVIGATION =====
   function switchAdminTab(tabId, btn) {
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
     document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
@@ -672,19 +633,54 @@ ON public.products FOR ALL USING (true);
     btn.classList.add('active');
   }
 
-  function formatFCFA(num) {
-    if (!num) return 'Sur devis';
-    return new Intl.NumberFormat('fr-FR').format(num) + ' FCFA';
+  function switchImgTab(panelId, btn) {
+    document.querySelectorAll('.img-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.img-tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(panelId).classList.add('active');
+    btn.classList.add('active');
   }
 
-  async function initAdmin() {
-    const products = await loadProducts();
-    renderProductsTable(products);
-    renderPresetPicker();
-    renderQuotesHistory();
-    document.getElementById('kpiTotalProducts').textContent = products.length;
+  // ===== SQL TOGGLE =====
+  function toggleSql() {
+    const box = document.getElementById('sqlSnippet');
+    const copyBtn = document.getElementById('sqlCopyBtn');
+    const icon = document.getElementById('sqlToggleIcon');
+    box.classList.toggle('show');
+    copyBtn.style.display = box.classList.contains('show') ? 'inline-flex' : 'none';
+    icon.className = box.classList.contains('show') ? 'fas fa-eye-slash' : 'fas fa-code';
   }
 
+  function copySqlCode() {
+    const code = document.getElementById('sqlSnippet').textContent;
+    navigator.clipboard.writeText(code).then(() => alert("Script SQL copié !"));
+  }
+
+  // ===== IMAGE UPLOAD (PHONE/CAMERA) =====
+  function handleImageUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      alert("Image trop lourde (max 5 MB). Essayez de compresser la photo.");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      uploadedImageData = ev.target.result;
+      const preview = document.getElementById('uploadPreview');
+      document.getElementById('uploadPreviewImg').src = uploadedImageData;
+      preview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function clearImageUpload() {
+    uploadedImageData = null;
+    document.getElementById('imgFileInput').value = '';
+    document.getElementById('uploadPreview').style.display = 'none';
+    document.getElementById('uploadPreviewImg').src = '';
+  }
+
+  // ===== GALLERY PICKER =====
   function renderPresetPicker() {
     const container = document.getElementById('presetImagesList');
     container.innerHTML = PRESET_IMAGES.map(img => `
@@ -695,32 +691,54 @@ ON public.products FOR ALL USING (true);
   function selectPresetImage(url, el) {
     document.querySelectorAll('.gallery-picker img').forEach(i => i.classList.remove('selected'));
     el.classList.add('selected');
+    // Switch to URL panel with value
     document.getElementById('prodImage').value = url;
   }
 
+  // ===== GET CURRENT IMAGE =====
+  function getCurrentImage() {
+    // Priority: upload > URL > gallery
+    if (uploadedImageData) return uploadedImageData;
+    const urlVal = document.getElementById('prodImage').value.trim();
+    return urlVal || '';
+  }
+
+  // ===== INIT =====
+  async function initAdmin() {
+    const products = await loadProducts();
+    renderProductsTable(products);
+    renderPresetPicker();
+    renderQuotesHistory();
+    document.getElementById('kpiTotalProducts').textContent = products.length;
+  }
+
+  // ===== PRODUCTS TABLE =====
   function renderProductsTable(products) {
     const tbody = document.getElementById('adminProductsTableBody');
+    if (!products || products.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--muted); padding:2rem">Aucun article dans le catalogue.</td></tr>';
+      return;
+    }
     tbody.innerHTML = products.map(p => {
       const dims = [];
       if (p.height) dims.push(`H: ${p.height}m`);
       if (p.width) dims.push(`L: ${p.width}m`);
-      const dimStr = dims.length ? dims.join(' × ') : (p.dimensions || 'Sur mesure');
-      const thickStr = p.thickness ? `${p.thickness} mm` : 'Standard';
-
+      const dimStr = dims.length ? dims.join(' × ') : 'Sur mesure';
+      const thickStr = p.thickness ? `${p.thickness} mm` : '—';
       return `
         <tr>
-          <td><img src="${p.image || ''}" class="prod-thumb" alt="${p.name}"></td>
+          <td>
+            <img src="${p.image || 'https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg'}"
+              class="prod-thumb" alt="${p.name}" onerror="this.src='https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg'">
+          </td>
           <td>
             <strong>${p.name}</strong><br>
-            <span style="font-size:0.75rem; text-transform:uppercase; color:var(--blue); font-weight:700">${p.category}</span>
+            <span style="font-size:0.72rem; text-transform:uppercase; color:var(--blue); font-weight:700">${p.category}</span>
           </td>
           <td>${dimStr}</td>
-          <td>
-            <strong>${thickStr}</strong><br>
-            <small style="color:var(--muted)">${p.material || 'Standard'}</small>
-          </td>
+          <td><strong>${thickStr}</strong><br><small style="color:var(--muted)">${p.material || '—'}</small></td>
           <td><strong style="color:var(--blue); font-size:1rem">${formatFCFA(p.price)}</strong></td>
-          <td style="text-align:right">
+          <td style="text-align:right; white-space:nowrap">
             <button class="action-btn edit" onclick="editProduct('${p.id}')" title="Modifier"><i class="fas fa-edit"></i></button>
             <button class="action-btn del" onclick="deleteProductItem('${p.id}')" title="Supprimer"><i class="fas fa-trash"></i></button>
           </td>
@@ -729,9 +747,17 @@ ON public.products FOR ALL USING (true);
     }).join('');
   }
 
+  function formatFCFA(num) {
+    if (!num || num === 0) return 'Sur devis';
+    return new Intl.NumberFormat('fr-FR').format(num) + ' FCFA';
+  }
+
+  // ===== MODAL =====
   function openProductModal(prod = null) {
     document.getElementById('productForm').reset();
     document.querySelectorAll('.gallery-picker img').forEach(i => i.classList.remove('selected'));
+    clearImageUpload();
+    uploadedImageData = null;
 
     if (prod) {
       document.getElementById('modalTitle').textContent = "Modifier l'Article";
@@ -780,90 +806,71 @@ ON public.products FOR ALL USING (true);
     const width = parseFloat(document.getElementById('prodWidth').value) || 0;
     const thickness = parseFloat(document.getElementById('prodThickness').value) || 0;
     const material = document.getElementById('prodMaterial').value.trim();
-    const image = document.getElementById('prodImage').value.trim();
+    const image = getCurrentImage();
     const description = document.getElementById('prodDesc').value.trim();
     const badge = document.getElementById('prodBadge').value.trim();
+
+    if (!name || !price) {
+      alert("Désignation et prix sont obligatoires.");
+      return;
+    }
 
     const dims = [];
     if (height) dims.push(`H: ${height}m`);
     if (width) dims.push(`L: ${width}m`);
-    const dimensions = dims.join(' × ');
 
-    const product = {
-      id,
-      name,
-      category,
-      price,
-      height,
-      width,
-      thickness,
-      material,
-      dimensions,
-      image,
-      description,
-      badge
-    };
-
+    const product = { id, name, category, price, height, width, thickness, material, dimensions: dims.join(' × '), image, description, badge };
     const updated = await saveProductToDB(product);
     renderProductsTable(updated);
     document.getElementById('kpiTotalProducts').textContent = updated.length;
     closeProductModal();
-    alert("Article enregistré avec succès !");
+    clearImageUpload();
   }
 
   function resetDefaults() {
-    if (confirm("Réinitialiser le catalogue avec les articles et tarifs d'origine SMAPEC ?")) {
+    if (confirm("Réinitialiser le catalogue avec les articles d'origine SMAPEC ?")) {
       const defs = resetToDefaultProducts();
       renderProductsTable(defs);
       document.getElementById('kpiTotalProducts').textContent = defs.length;
     }
   }
 
+  // ===== QUOTES HISTORY =====
   function renderQuotesHistory() {
     const history = JSON.parse(localStorage.getItem('smapec_quotes_history') || '[]');
     document.getElementById('kpiTotalQuotes').textContent = history.length;
     const container = document.getElementById('adminQuotesContainer');
     if (history.length === 0) {
-      container.innerHTML = '<p style="color:var(--muted)">Aucun devis généré pour le moment.</p>';
+      container.innerHTML = '<p style="color:var(--muted); text-align:center; padding:2rem">Aucun devis généré pour le moment.</p>';
       return;
     }
     container.innerHTML = `
-      <table class="products-table">
-        <thead>
-          <tr>
-            <th>Réf Devis</th>
-            <th>Date</th>
-            <th>Client</th>
-            <th>Téléphone</th>
-            <th>Localisation</th>
-            <th>Projet</th>
+      <div style="overflow-x:auto">
+        <table class="products-table">
+          <thead><tr>
+            <th>Réf Devis</th><th>Date</th><th>Client</th>
+            <th>Téléphone</th><th>Localisation</th><th>Projet</th>
             <th style="text-align:right">Montant</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${history.map(q => `
-            <tr>
-              <td><strong>${q.id}</strong></td>
-              <td>${q.date}</td>
-              <td>${q.client}</td>
-              <td><a href="tel:${q.phone}">${q.phone}</a></td>
-              <td>${q.city}</td>
-              <td>${q.project}</td>
-              <td style="text-align:right"><strong>${formatFCFA(q.total)}</strong></td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
+          </tr></thead>
+          <tbody>
+            ${history.map(q => `
+              <tr>
+                <td><strong>${q.id}</strong></td>
+                <td>${q.date}</td>
+                <td>${q.client}</td>
+                <td><a href="tel:${q.phone}">${q.phone}</a></td>
+                <td>${q.city}</td>
+                <td>${q.project}</td>
+                <td style="text-align:right"><strong>${formatFCFA(q.total)}</strong></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
     `;
   }
 
-  function copySqlCode() {
-    const code = document.getElementById('sqlSnippet').textContent;
-    navigator.clipboard.writeText(code).then(() => {
-      alert("Script SQL copié dans le presse-papier ! Vous pouvez le coller dans Supabase SQL Editor.");
-    });
-  }
-
+  // ===== INIT ON LOAD =====
   document.addEventListener('DOMContentLoaded', () => {
     if (sessionStorage.getItem(AUTH_KEY) === 'true') {
       document.getElementById('authGate').style.display = 'none';

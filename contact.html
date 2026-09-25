@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact – SMAPEC | Devis Gratuit Menuiserie Métallique Dakar</title>
+  <meta name="description" content="Contactez SMAPEC pour un devis gratuit. Portes, fenêtres, grilles sur mesure à Dakar. Réponse sous 24h. Téléphone, WhatsApp ou formulaire.">
+  <link rel="icon" type="image/jpeg" href="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .contact-info-box {
+      background: var(--blue);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      color: white;
+      position: sticky;
+      top: 100px;
+    }
+    .contact-info-box h2 { font-family: 'Oswald', sans-serif; font-size: 1.8rem; text-transform: uppercase; margin-bottom: 0.5rem; color: white; }
+    .contact-info-box p { font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 2rem; line-height: 1.7; }
+    .contact-info-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem; border-radius: 10px;
+      background: rgba(255,255,255,0.08); margin-bottom: 0.75rem;
+      text-decoration: none; color: white;
+      transition: background var(--transition);
+    }
+    .contact-info-item:hover { background: rgba(255,255,255,0.15); }
+    .contact-info-icon {
+      width: 42px; height: 42px; border-radius: 8px;
+      background: var(--yellow); color: var(--blue);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .contact-info-item strong { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.5); text-transform: uppercase; font-size: 0.7rem; margin-bottom: 2px; }
+    .contact-info-item span { font-size: 0.95rem; font-weight: 600; }
+    .contact-qr { text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
+    .contact-qr p { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-bottom: 0.75rem; }
+    .contact-qr img { border-radius: 12px; background: white; padding: 8px; }
+
+    /* Form */
+    .contact-form-box {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow);
+    }
+    .contact-form-box h2 { font-family: 'Oswald', sans-serif; font-size: 1.8rem; color: var(--dark); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .contact-form-box p { font-size: 0.9rem; color: var(--muted); margin-bottom: 2rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--dark); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.5rem; }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      color: var(--dark);
+      background: var(--bg);
+      transition: border-color var(--transition), box-shadow var(--transition);
+      outline: none;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(43,57,144,0.1);
+      background: white;
+    }
+    .form-textarea { min-height: 130px; resize: vertical; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-submit {
+      width: 100%;
+      padding: 1.1rem;
+      background: var(--blue);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .form-submit:hover { background: var(--blue-dark); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(43,57,144,0.3); }
+    #formSuccess {
+      display: none;
+      background: rgba(37,211,102,0.1);
+      border: 2px solid var(--wa);
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+      color: #16a34a;
+      font-weight: 700;
+      margin-top: 1rem;
+    }
+    .map-section { margin-top: 4rem; }
+    .map-embed { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg); height: 400px; }
+    .map-embed iframe { width: 100%; height: 100%; border: none; }
+
+    @media (max-width: 768px) {
+      .contact-layout { grid-template-columns: 1fr; }
+      .contact-info-box { position: static; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar scrolled" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg" alt="Logo SMAPEC">
+      <span class="nav-brand" style="color:var(--blue)">SMAPEC</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="catalogue.html">Catalogue</a></li>
+      <li><a href="realisations.html">Réalisations</a></li>
+      <li><a href="devis.html">Mon Devis</a></li>
+      <li><a href="carte.html">Carte Contact</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+      <li><a href="admin.html" style="opacity: 0.7; font-size: 0.8rem;"><i class="fas fa-lock"></i> Admin</a></li>
+    </ul>
+    <div class="nav-cta">
+      <button class="nav-cart-btn" onclick="openCartDrawer()" title="Voir mon panier de devis">
+        <i class="fas fa-file-invoice"></i>
+        <span class="cart-count">0</span>
+      </button>
+      <a href="tel:+221777044672" class="btn-nav-call"><i class="fas fa-phone-alt"></i> Appeler</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container page-header-content">
+    <h1>Contactez-Nous</h1>
+    <div class="breadcrumb"><a href="index.html">Accueil</a><span>/</span> Contact</div>
+  </div>
+</div>
+
+<section class="section" style="background:var(--bg)">
+  <div class="container">
+    <div class="contact-layout">
+
+      <!-- Info Box -->
+      <div class="contact-info-box">
+        <h2>Parlons de votre projet</h2>
+        <p>Devis gratuit sous 24h. Nos experts se déplacent pour évaluer vos besoins à Dakar et en région.</p>
+
+        <a href="tel:+221777044672" class="contact-info-item">
+          <div class="contact-info-icon"><i class="fas fa-phone-alt"></i></div>
+          <div><strong>Téléphone</strong><span>+221 77 704 46 72</span></div>
+        </a>
+        <a href="https://wa.me/221777044672" target="_blank" class="contact-info-item">
+          <div class="contact-info-icon"><i class="fab fa-whatsapp"></i></div>
+          <div><strong>WhatsApp</strong><span>+221 77 704 46 72</span></div>
+        </a>
+        <a href="mailto:smapecalu@gmail.com" class="contact-info-item">
+          <div class="contact-info-icon"><i class="fas fa-envelope"></i></div>
+          <div><strong>Email</strong><span>smapecalu@gmail.com</span></div>
+        </a>
+        <a href="http://www.smapecalu.com" target="_blank" class="contact-info-item">
+          <div class="contact-info-icon"><i class="fas fa-globe"></i></div>
+          <div><strong>Site Web</strong><span>www.smapecalu.com</span></div>
+        </a>
+        <a href="https://maps.google.com/?q=14.774294,-17.290739" target="_blank" class="contact-info-item">
+          <div class="contact-info-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div><strong>Adresse</strong><span>Dakar, Sénégal</span></div>
+        </a>
+
+        <div class="contact-qr">
+          <p>Scanner pour nous contacter sur WhatsApp</p>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=https://wa.me/221777044672&color=2B3990&bgcolor=FFFFFF" alt="QR Code WhatsApp SMAPEC" width="140" height="140">
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="contact-form-box">
+        <h2>Demande de Devis</h2>
+        <p>Remplissez ce formulaire et nous vous recontactons sous 24h avec une estimation gratuite.</p>
+
+        <form id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="nom">Nom complet *</label>
+              <input class="form-input" type="text" id="nom" name="nom" placeholder="Ex: Moussa Diallo" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="tel">Téléphone *</label>
+              <input class="form-input" type="tel" id="tel" name="tel" placeholder="+221 77 XXX XX XX" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <input class="form-input" type="email" id="email" name="email" placeholder="votre@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="service">Type de prestation *</label>
+            <select class="form-select" id="service" name="service" required>
+              <option value="">-- Choisir --</option>
+              <option value="porte">Porte Blindée / Aluminium</option>
+              <option value="fenetre">Fenêtre Aluminium</option>
+              <option value="grille">Grille de Sécurité</option>
+              <option value="portail">Portail / Clôture</option>
+              <option value="structure">Structure Métallique</option>
+              <option value="autre">Autre / Sur Mesure</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="message">Description du projet</label>
+            <textarea class="form-textarea" id="message" name="message" placeholder="Décrivez votre projet : dimensions approximatives, quantités, matériaux souhaités, délais..."></textarea>
+          </div>
+          <button type="submit" class="form-submit" id="submitBtn">
+            <i class="fas fa-paper-plane"></i> Envoyer ma demande
+          </button>
+          <div id="formSuccess">
+            <i class="fas fa-check-circle"></i> Merci ! Nous vous recontacterons sous 24h. Vous pouvez aussi nous contacter directement sur WhatsApp.
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Map -->
+    <div class="map-section">
+      <div class="section-header" style="margin-bottom:2rem">
+        <span class="section-tag">Localisation</span>
+        <h2 class="section-title">Où nous trouver</h2>
+        <p class="section-sub">Notre atelier est situé à Dakar, Sénégal. Nous intervenons dans tout le Sénégal.</p>
+      </div>
+      <div class="map-embed">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15435.87!2d-17.290739!3d14.774294!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTTCsDQ2JzI3LjUiTiAxN8KwMTcnMjYuNyJX!5e0!3m2!1sfr!2ssn!4v1"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Localisation SMAPEC Dakar">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" style="background: white">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">FAQ</span>
+      <h2 class="section-title">Questions fréquentes</h2>
+    </div>
+    <div style="max-width: 750px; margin: 0 auto;">
+      <div style="background:var(--bg); border-radius:12px; padding:1.5rem; margin-bottom:1rem; border-left: 4px solid var(--yellow)">
+        <strong style="font-size:1rem; color:var(--dark); display:block; margin-bottom:0.5rem">Est-ce que le devis est vraiment gratuit ?</strong>
+        <p style="font-size:0.9rem; color:var(--muted); line-height:1.6">Oui, le devis et le déplacement pour mesurer sont 100% gratuits et sans engagement.</p>
+      </div>
+      <div style="background:var(--bg); border-radius:12px; padding:1.5rem; margin-bottom:1rem; border-left: 4px solid var(--blue)">
+        <strong style="font-size:1rem; color:var(--dark); display:block; margin-bottom:0.5rem">Quels sont les délais de fabrication ?</strong>
+        <p style="font-size:0.9rem; color:var(--muted); line-height:1.6">Selon la complexité : 3 à 10 jours ouvrables pour la fabrication, puis 1 à 2 jours pour la pose.</p>
+      </div>
+      <div style="background:var(--bg); border-radius:12px; padding:1.5rem; margin-bottom:1rem; border-left: 4px solid var(--yellow)">
+        <strong style="font-size:1rem; color:var(--dark); display:block; margin-bottom:0.5rem">Livrez-vous partout au Sénégal ?</strong>
+        <p style="font-size:0.9rem; color:var(--muted); line-height:1.6">Nous livrons et posons principalement à Dakar et ses environs. Pour d'autres villes, contactez-nous.</p>
+      </div>
+      <div style="background:var(--bg); border-radius:12px; padding:1.5rem; border-left: 4px solid var(--blue)">
+        <strong style="font-size:1rem; color:var(--dark); display:block; margin-bottom:0.5rem">Proposez-vous une garantie sur vos produits ?</strong>
+        <p style="font-size:0.9rem; color:var(--muted); line-height:1.6">Oui, tous nos ouvrages sont garantis et nous assurons le service après-vente et la maintenance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-bottom" style="border-top:none">
+    <div class="container" style="justify-content:center; padding: 1.5rem">
+      <p>© 2026 SMAPEC – Super Métal Aluminium. Dakar, Sénégal.</p>
+    </div>
+  </div>
+  <div class="footer-dev">
+    Développé par <a href="https://bambatechnologies.com" target="_blank" rel="noopener">bambatechnologies.com</a>
+  </div>
+</footer>
+
+<a href="https://wa.me/221777044672" target="_blank" class="wa-float"><i class="fab fa-whatsapp"></i></a>
+
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

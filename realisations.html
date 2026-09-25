@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Réalisations – SMAPEC | Galerie de nos travaux à Dakar</title>
+  <meta name="description" content="Galerie photo des réalisations SMAPEC : portes, fenêtres, grilles et structures métalliques installées à Dakar et au Sénégal.">
+  <link rel="icon" type="image/jpeg" href="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .gallery-full {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+    .gf-item {
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      background: #111;
+      aspect-ratio: 1;
+    }
+    .gf-item img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.5s ease; }
+    .gf-item:hover img { transform: scale(1.06); }
+    .gf-overlay {
+      position: absolute; inset: 0;
+      background: rgba(43,57,144,0.7);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity var(--transition);
+      color: white; font-size: 1.5rem;
+    }
+    .gf-item:hover .gf-overlay { opacity: 1; }
+    .gf-item.gf-wide { grid-column: span 2; aspect-ratio: 2; }
+    .gf-item.gf-tall { grid-row: span 2; aspect-ratio: 0.5; }
+    @media (max-width: 768px) {
+      .gallery-full { grid-template-columns: repeat(2, 1fr); }
+      .gf-item.gf-wide { grid-column: span 1; aspect-ratio: 1; }
+      .gf-item.gf-tall { grid-row: span 1; aspect-ratio: 1; }
+    }
+    @media (max-width: 480px) { .gallery-full { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav class="navbar scrolled" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg" alt="Logo SMAPEC">
+      <span class="nav-brand" style="color:var(--blue)">SMAPEC</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="catalogue.html">Catalogue</a></li>
+      <li><a href="realisations.html" class="active">Réalisations</a></li>
+      <li><a href="devis.html">Mon Devis</a></li>
+      <li><a href="carte.html">Carte Contact</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="admin.html" style="opacity: 0.7; font-size: 0.8rem;"><i class="fas fa-lock"></i> Admin</a></li>
+    </ul>
+    <div class="nav-cta">
+      <button class="nav-cart-btn" onclick="openCartDrawer()" title="Voir mon panier de devis">
+        <i class="fas fa-file-invoice"></i>
+        <span class="cart-count">0</span>
+      </button>
+      <a href="tel:+221777044672" class="btn-nav-call"><i class="fas fa-phone-alt"></i> Appeler</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="container page-header-content">
+    <h1>Nos Réalisations</h1>
+    <div class="breadcrumb"><a href="index.html">Accueil</a><span>/</span> Réalisations</div>
+  </div>
+</div>
+
+<section class="section" style="background:white">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Portfolio</span>
+      <h2 class="section-title">26 Réalisations Photographiées</h2>
+      <p class="section-sub">Des ouvrages métalliques et aluminium livrés avec passion, énergie et courage à travers tout le Sénégal</p>
+    </div>
+
+    <div class="gallery-full" id="galleryFull">
+      <div class="gf-item gf-tall" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754519/photo_2026-09-18_17-20-23_nqtvp6.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754519/photo_2026-09-18_17-20-23_nqtvp6.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754212/photo_2026-09-18_17-20-46_sfuxeh.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754212/photo_2026-09-18_17-20-46_sfuxeh.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754503/photo_2026-09-18_17-20-37_fburgd.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754503/photo_2026-09-18_17-20-37_fburgd.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item gf-wide" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754515/photo_2026-09-18_17-20-31_dkwued.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754515/photo_2026-09-18_17-20-31_dkwued.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754080/photo_11_2026-09-18_17-53-40_sbyyqf.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754080/photo_11_2026-09-18_17-53-40_sbyyqf.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754075/photo_15_2026-09-18_17-53-40_cn0x5z.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754075/photo_15_2026-09-18_17-53-40_cn0x5z.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754053/photo_22_2026-09-18_17-53-40_s75w8g.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754053/photo_22_2026-09-18_17-53-40_s75w8g.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754050/photo_23_2026-09-18_17-53-40_g5lswr.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754050/photo_23_2026-09-18_17-53-40_g5lswr.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754066/photo_16_2026-09-18_17-53-40_a3kik6.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754066/photo_16_2026-09-18_17-53-40_a3kik6.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754083/photo_12_2026-09-18_17-53-40_zo4d06.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754083/photo_12_2026-09-18_17-53-40_zo4d06.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754077/photo_13_2026-09-18_17-53-40_e5prwm.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754077/photo_13_2026-09-18_17-53-40_e5prwm.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754072/photo_14_2026-09-18_17-53-40_qvmc5k.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754072/photo_14_2026-09-18_17-53-40_qvmc5k.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754101/photo_4_2026-09-18_17-53-40_rbaf1s.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754101/photo_4_2026-09-18_17-53-40_rbaf1s.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754098/photo_7_2026-09-18_17-53-40_a9sy3i.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754098/photo_7_2026-09-18_17-53-40_a9sy3i.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754069/photo_17_2026-09-18_17-53-40_akho4f.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754069/photo_17_2026-09-18_17-53-40_akho4f.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754209/photo_2026-09-18_17-20-53_x2tbgs.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754209/photo_2026-09-18_17-20-53_x2tbgs.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754089/photo_10_2026-09-18_17-53-40_bmtcfo.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754089/photo_10_2026-09-18_17-53-40_bmtcfo.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754092/photo_8_2026-09-18_17-53-40_sxc91j.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754092/photo_8_2026-09-18_17-53-40_sxc91j.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754086/photo_9_2026-09-18_17-53-40_i2gmyv.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754086/photo_9_2026-09-18_17-53-40_i2gmyv.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754064/photo_18_2026-09-18_17-53-40_ik0yfx.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754064/photo_18_2026-09-18_17-53-40_ik0yfx.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754061/photo_19_2026-09-18_17-53-40_h8ugaj.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754061/photo_19_2026-09-18_17-53-40_h8ugaj.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754054/photo_20_2026-09-18_17-53-40_kuybjp.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754054/photo_20_2026-09-18_17-53-40_kuybjp.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754047/photo_1_2026-09-18_17-53-40_aq2knc.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754047/photo_1_2026-09-18_17-53-40_aq2knc.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754040/photo_5_2026-09-18_17-53-40_vffxi9.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754040/photo_5_2026-09-18_17-53-40_vffxi9.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754041/photo_2_2026-09-18_17-53-40_lkeljs.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754041/photo_2_2026-09-18_17-53-40_lkeljs.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gf-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754045/photo_3_2026-09-18_17-53-40_repvym.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754045/photo_3_2026-09-18_17-53-40_repvym.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gf-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-bg" style="background-image:url('https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754075/photo_15_2026-09-18_17-53-40_cn0x5z.jpg')"></div>
+  <div class="cta-overlay"></div>
+  <div class="container">
+    <div class="cta-content">
+      <h2 class="cta-title">Votre projet sera notre prochaine réalisation !</h2>
+      <p class="cta-sub">Rejoignez nos 500+ clients satisfaits à travers le Sénégal.</p>
+      <div class="cta-actions">
+        <a href="https://wa.me/221777044672?text=Bonjour%20SMAPEC%2C%20je%20souhaite%20un%20devis%20gratuit." target="_blank" class="btn-cta-wa"><i class="fab fa-whatsapp"></i> Devis WhatsApp</a>
+        <a href="tel:+221777044672" class="btn-cta-call"><i class="fas fa-phone-alt"></i> +221 77 704 46 72</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-bottom" style="border-top:none">
+    <div class="container" style="justify-content:center; padding: 1.5rem">
+      <p>© 2026 SMAPEC – Super Métal Aluminium. Dakar, Sénégal.</p>
+    </div>
+  </div>
+  <div class="footer-dev">
+    Développé par <a href="https://bambatechnologies.com" target="_blank" rel="noopener">bambatechnologies.com</a>
+  </div>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose"><i class="fas fa-times"></i></button>
+  <div class="lightbox-content"><img src="" alt="" id="lightboxImg"></div>
+</div>
+
+<a href="https://wa.me/221777044672" target="_blank" class="wa-float"><i class="fab fa-whatsapp"></i></a>
+<div class="sticky-cta">
+  <a href="tel:+221777044672" class="sticky-btn sticky-call"><i class="fas fa-phone-alt"></i> Appeler</a>
+  <a href="devis.html" class="sticky-btn sticky-wa" style="background:var(--yellow); color:var(--blue)"><i class="fas fa-file-invoice"></i> Devis</a>
+</div>
+
+<script>
+  // Make all gf-items clickable for lightbox
+  document.querySelectorAll('.gf-item').forEach(item => {
+    item.classList.add('gallery-item');
+  });
+</script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMAPEC – Super Métal Aluminium | Portes, Fenêtres & Grilles à Dakar</title>
+  <meta name="description" content="SMAPEC - Super Métal Aluminium, expert en fabrication de portes, fenêtres, grilles et menuiseries métalliques à Dakar, Sénégal. Passion Énergie Courage.">
+  <meta property="og:title" content="SMAPEC – Super Métal Aluminium">
+  <meta property="og:description" content="Expert en menuiseries métalliques et aluminium à Dakar.">
+  <meta property="og:image" content="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/jpeg" href="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg" alt="Logo SMAPEC">
+      <span class="nav-brand">SMAPEC</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="active">Accueil</a></li>
+      <li><a href="catalogue.html">Catalogue</a></li>
+      <li><a href="realisations.html">Réalisations</a></li>
+      <li><a href="devis.html">Mon Devis</a></li>
+      <li><a href="carte.html">Carte Contact</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="admin.html" style="opacity: 0.7; font-size: 0.8rem;"><i class="fas fa-lock"></i> Admin</a></li>
+    </ul>
+    <div class="nav-cta">
+      <button class="nav-cart-btn" onclick="openCartDrawer()" title="Voir mon panier de devis">
+        <i class="fas fa-file-invoice"></i>
+        <span class="cart-count">0</span>
+      </button>
+      <a href="tel:+221777044672" class="btn-nav-call"><i class="fas fa-phone-alt"></i> Appeler</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="accueil">
+  <div class="hero-slides" id="heroSlides">
+    <div class="hero-slide active" style="background-image:url('https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754075/photo_15_2026-09-18_17-53-40_cn0x5z.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754212/photo_2026-09-18_17-20-46_sfuxeh.jpg')"></div>
+    <div class="hero-slide" style="background-image:url('https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754503/photo_2026-09-18_17-20-37_fburgd.jpg')"></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">&#127942; N°1 Menuiserie Métallique au Sénégal</div>
+    <h1 class="hero-title">L'Excellence<br><span class="hero-accent">en Métal &amp; Aluminium</span></h1>
+    <p class="hero-sub">Portes blindées · Fenêtres aluminium · Grilles sécurisées · Structures métalliques<br>Fabrication sur mesure à Dakar depuis plus de 15 ans</p>
+    <div class="hero-actions">
+      <a href="catalogue.html" class="btn-primary">Voir le Catalogue <i class="fas fa-arrow-right"></i></a>
+      <a href="https://wa.me/221777044672" target="_blank" class="btn-wa-hero"><i class="fab fa-whatsapp"></i> Devis Gratuit</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><strong>500+</strong><span>Projets livrés</span></div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat"><strong>15+</strong><span>Ans d'expérience</span></div>
+      <div class="hero-stat-divider"></div>
+      <div class="hero-stat"><strong>100%</strong><span>Sur mesure</span></div>
+    </div>
+  </div>
+  <div class="hero-scroll-indicator"><div class="hero-scroll-dot"></div></div>
+  <div class="hero-slide-dots" id="heroSlidesDots">
+    <button class="dot active" data-slide="0"></button>
+    <button class="dot" data-slide="1"></button>
+    <button class="dot" data-slide="2"></button>
+  </div>
+</section>
+
+<!-- ===== FEATURES BAR ===== -->
+<section class="features-bar">
+  <div class="container">
+    <div class="features-grid">
+      <div class="feature-item">
+        <i class="fas fa-ruler-combined"></i>
+        <div><strong>Fabrication Sur Mesure</strong><span>Dimensions exactes</span></div>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-shield-alt"></i>
+        <div><strong>Qualité Garantie</strong><span>Matériaux premium</span></div>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-truck"></i>
+        <div><strong>Livraison &amp; Pose</strong><span>Partout à Dakar</span></div>
+      </div>
+      <div class="feature-item">
+        <i class="fas fa-headset"></i>
+        <div><strong>Devis Gratuit</strong><span>Réponse rapide</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CATÉGORIES ===== -->
+<section class="section categories-section" id="produits">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Nos Expertises</span>
+      <h2 class="section-title">Ce que nous fabriquons</h2>
+      <p class="section-sub">Du sur mesure haut de gamme pour particuliers et professionnels</p>
+    </div>
+    <div class="categories-grid">
+      <a href="catalogue.html" class="cat-card cat-card--lg">
+        <div class="cat-card-img" style="background-image:url('https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754519/photo_2026-09-18_17-20-23_nqtvp6.jpg')"></div>
+        <div class="cat-card-body">
+          <h3>Portes Blindées</h3>
+          <p>Sécurité maximale, esthétique moderne</p>
+          <span class="cat-link">Découvrir <i class="fas fa-arrow-right"></i></span>
+        </div>
+      </a>
+      <a href="catalogue.html" class="cat-card">
+        <div class="cat-card-img" style="background-image:url('https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754212/photo_2026-09-18_17-20-46_sfuxeh.jpg')"></div>
+        <div class="cat-card-body">
+          <h3>Fenêtres Aluminium</h3>
+          <p>Isolation thermique &amp; acoustique</p>
+          <span class="cat-link">Découvrir <i class="fas fa-arrow-right"></i></span>
+        </div>
+      </a>
+      <a href="catalogue.html" class="cat-card">
+        <div class="cat-card-img" style="background-image:url('https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754503/photo_2026-09-18_17-20-37_fburgd.jpg')"></div>
+        <div class="cat-card-body">
+          <h3>Grilles de Sécurité</h3>
+          <p>Protection élégante sur mesure</p>
+          <span class="cat-link">Découvrir <i class="fas fa-arrow-right"></i></span>
+        </div>
+      </a>
+      <a href="catalogue.html" class="cat-card">
+        <div class="cat-card-img" style="background-image:url('https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754515/photo_2026-09-18_17-20-31_dkwued.jpg')"></div>
+        <div class="cat-card-body">
+          <h3>Structures Métalliques</h3>
+          <p>Charpentes, hangars, escaliers</p>
+          <span class="cat-link">Découvrir <i class="fas fa-arrow-right"></i></span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== POURQUOI SMAPEC ===== -->
+<section class="section why-section">
+  <div class="container">
+    <div class="why-grid">
+      <div class="why-visual">
+        <div class="why-img-main">
+          <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754080/photo_11_2026-09-18_17-53-40_sbyyqf.jpg" alt="Atelier SMAPEC" loading="lazy">
+        </div>
+        <div class="why-img-float">
+          <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754209/photo_2026-09-18_17-20-53_x2tbgs.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        </div>
+        <div class="why-badge-float"><strong>15+</strong><span>Ans d'excellence</span></div>
+      </div>
+      <div class="why-content">
+        <span class="section-tag">Pourquoi nous choisir</span>
+        <h2 class="section-title" style="text-align:left">SMAPEC,<br>l'expert de confiance</h2>
+        <p class="why-desc">Depuis plus de 15 ans, SMAPEC est le référent incontournable de la menuiserie métallique et aluminium à Dakar. Notre équipe combine tradition et innovation.</p>
+        <div class="why-list">
+          <div class="why-item">
+            <div class="why-icon"><i class="fas fa-check"></i></div>
+            <div><strong>Devis gratuit sous 24h</strong><p>Estimation précise et transparente sans engagement</p></div>
+          </div>
+          <div class="why-item">
+            <div class="why-icon"><i class="fas fa-check"></i></div>
+            <div><strong>Acier &amp; Aluminium certifiés</strong><p>Matériaux de qualité industrielle, résistants et durables</p></div>
+          </div>
+          <div class="why-item">
+            <div class="why-icon"><i class="fas fa-check"></i></div>
+            <div><strong>Pose professionnelle incluse</strong><p>Nos techniciens installent avec soin et précision</p></div>
+          </div>
+          <div class="why-item">
+            <div class="why-icon"><i class="fas fa-check"></i></div>
+            <div><strong>Garantie satisfaction</strong><p>Service après-vente et maintenance assurés</p></div>
+          </div>
+        </div>
+        <a href="contact.html" class="btn-primary" style="margin-top:2rem">Demander un Devis <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== RÉALISATIONS ===== -->
+<section class="section gallery-section" id="realisations">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Nos Réalisations</span>
+      <h2 class="section-title">Travaux récents</h2>
+      <p class="section-sub">Une sélection de nos meilleures réalisations</p>
+    </div>
+    <div class="gallery-masonry">
+      <div class="gallery-item gi-tall" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754519/photo_2026-09-18_17-20-23_nqtvp6.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754519/photo_2026-09-18_17-20-23_nqtvp6.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gallery-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754212/photo_2026-09-18_17-20-46_sfuxeh.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754212/photo_2026-09-18_17-20-46_sfuxeh.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gallery-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754503/photo_2026-09-18_17-20-37_fburgd.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754503/photo_2026-09-18_17-20-37_fburgd.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gallery-item gi-tall" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754515/photo_2026-09-18_17-20-31_dkwued.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754515/photo_2026-09-18_17-20-31_dkwued.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gallery-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754080/photo_11_2026-09-18_17-53-40_sbyyqf.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754080/photo_11_2026-09-18_17-53-40_sbyyqf.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+      <div class="gallery-item" data-src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754066/photo_16_2026-09-18_17-53-40_a3kik6.jpg">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754066/photo_16_2026-09-18_17-53-40_a3kik6.jpg" alt="Réalisation SMAPEC" loading="lazy">
+        <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+      </div>
+    </div>
+    <div class="section-cta">
+      <a href="realisations.html" class="btn-outline">Voir toutes les réalisations <i class="fas fa-images"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA DEVIS ===== -->
+<section class="cta-section">
+  <div class="cta-bg" style="background-image:url('https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754083/photo_12_2026-09-18_17-53-40_zo4d06.jpg')"></div>
+  <div class="cta-overlay"></div>
+  <div class="container">
+    <div class="cta-content">
+      <h2 class="cta-title">Un projet en tête ?</h2>
+      <p class="cta-sub">Nos experts se déplacent gratuitement pour évaluer vos besoins et vous proposer un devis sur mesure.</p>
+      <div class="cta-actions">
+        <a href="https://wa.me/221777044672?text=Bonjour%20SMAPEC%2C%20je%20souhaite%20un%20devis%20gratuit." target="_blank" class="btn-cta-wa">
+          <i class="fab fa-whatsapp"></i> Devis WhatsApp
+        </a>
+        <a href="tel:+221777044672" class="btn-cta-call">
+          <i class="fas fa-phone-alt"></i> +221 77 704 46 72
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TÉMOIGNAGES ===== -->
+<section class="section testimonials-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Témoignages</span>
+      <h2 class="section-title">Ce que disent nos clients</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="testimonial-text">"SMAPEC a installé une porte blindée pour mon domicile. Le travail est impeccable, les délais respectés et le prix très compétitif. Je recommande vivement !"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">A</div>
+          <div><strong>Abdoulaye D.</strong><span>Particulier, Dakar</span></div>
+        </div>
+      </div>
+      <div class="testimonial-card testimonial-card--featured">
+        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="testimonial-text">"Nous avons fait appel à SMAPEC pour les grilles et fenêtres de notre immeuble. Service professionnel du début à la fin. La qualité de l'aluminium est exceptionnelle."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">M</div>
+          <div><strong>Mamadou K.</strong><span>Promoteur immobilier</span></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="testimonial-text">"Baye Sylla et son équipe sont très professionnels. Ils ont réalisé toutes les structures métalliques de notre usine dans les délais. Excellent rapport qualité/prix."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">F</div>
+          <div><strong>Fatou N.</strong><span>Directrice d'usine</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DIRECTEUR ===== -->
+<section class="section director-section">
+  <div class="container">
+    <div class="director-card">
+      <div class="director-img">
+        <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg" alt="Baye Sylla - Directeur Général SMAPEC">
+      </div>
+      <div class="director-content">
+        <span class="section-tag">Direction</span>
+        <h2>Baye Sylla</h2>
+        <p class="director-title">Directeur Général — SMAPEC</p>
+        <p class="director-quote">"Notre engagement : vous livrer un ouvrage métallique de qualité supérieure, dans les délais convenus et au prix juste. Passion, Énergie, Courage."</p>
+        <div class="director-actions">
+          <a href="carte.html" class="btn-primary">Voir la fiche contact</a>
+          <a href="https://wa.me/221777044672" target="_blank" class="btn-wa-sm"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="footer-top">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg" alt="Logo SMAPEC" class="footer-logo">
+          <p>Super Métal Aluminium — Expert en menuiseries métalliques et aluminium à Dakar depuis plus de 15 ans.</p>
+          <div class="footer-slogan">Passion · Énergie · Courage</div>
+        </div>
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="catalogue.html">Catalogue</a></li>
+            <li><a href="realisations.html">Réalisations</a></li>
+            <li><a href="carte.html">Carte Contact</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Produits</h4>
+          <ul>
+            <li><a href="catalogue.html">Portes Blindées</a></li>
+            <li><a href="catalogue.html">Fenêtres Aluminium</a></li>
+            <li><a href="catalogue.html">Grilles de Sécurité</a></li>
+            <li><a href="catalogue.html">Structures Métalliques</a></li>
+            <li><a href="catalogue.html">Portails &amp; Clôtures</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <div class="footer-contact-item"><i class="fas fa-phone-alt"></i><a href="tel:+221777044672">+221 77 704 46 72</a></div>
+          <div class="footer-contact-item"><i class="fab fa-whatsapp"></i><a href="https://wa.me/221777044672" target="_blank">WhatsApp</a></div>
+          <div class="footer-contact-item"><i class="fas fa-envelope"></i><a href="mailto:smapecalu@gmail.com">smapecalu@gmail.com</a></div>
+          <div class="footer-contact-item"><i class="fas fa-globe"></i><a href="http://www.smapecalu.com" target="_blank">www.smapecalu.com</a></div>
+          <div class="footer-contact-item"><i class="fas fa-map-marker-alt"></i><span>Dakar, Sénégal</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <p>© 2026 SMAPEC – Super Métal Aluminium. Tous droits réservés.</p>
+      <p><a href="contact.html">Politique de confidentialité</a> · <a href="contact.html">Mentions légales</a></p>
+    </div>
+  </div>
+  <div class="footer-dev">
+    Développé par <a href="https://bambatechnologies.com" target="_blank" rel="noopener">bambatechnologies.com</a>
+  </div>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose"><i class="fas fa-times"></i></button>
+  <div class="lightbox-content"><img src="" alt="" id="lightboxImg"></div>
+</div>
+
+<!-- Sticky CTA mobile -->
+<div class="sticky-cta" id="stickyCta">
+  <a href="tel:+221777044672" class="sticky-btn sticky-call"><i class="fas fa-phone-alt"></i> Appeler</a>
+  <a href="devis.html" class="sticky-btn sticky-wa" style="background:var(--yellow); color:var(--blue)"><i class="fas fa-file-invoice"></i> Devis</a>
+</div>
+
+<!-- WA flottant -->
+<a href="https://wa.me/221777044672" target="_blank" class="wa-float" title="WhatsApp SMAPEC">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

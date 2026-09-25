@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catalogue & Panier Devis – SMAPEC | Portes, Fenêtres, Grilles & Structures Métalliques Dakar</title>
+  <meta name="description" content="Découvrez le catalogue complet de SMAPEC : portes blindées, baies vitrées aluminium, grilles de sécurité, portails et structures métalliques. Composez votre devis en ligne instantanément.">
+  <link rel="icon" type="image/jpeg" href="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .catalog-hero {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--blue) 100%);
+      padding: 7rem 0 3.5rem;
+      color: white;
+      text-align: center;
+    }
+    .catalog-hero h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2.5rem;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+    .catalog-hero p {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.85);
+      max-width: 650px;
+      margin: 0 auto 1.5rem;
+    }
+    .catalog-search-wrap {
+      max-width: 480px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .catalog-search-wrap input {
+      width: 100%;
+      padding: 0.85rem 1.2rem 0.85rem 2.8rem;
+      border-radius: 50px;
+      border: none;
+      font-size: 0.95rem;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    }
+    .catalog-search-wrap i {
+      position: absolute;
+      left: 1.1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+    }
+    .filters {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 2.5rem 0 3rem;
+    }
+    .filter-btn {
+      padding: 0.6rem 1.3rem;
+      border-radius: 50px;
+      border: 2px solid var(--border);
+      background: white;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all var(--transition);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: white;
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    @media (max-width: 1024px) and (min-width: 769px) {
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .products-grid { grid-template-columns: 1fr; }
+    }
+    .product-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: all var(--transition);
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border);
+    }
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--yellow);
+    }
+    .product-img {
+      height: 250px;
+      background: #111;
+      overflow: hidden;
+      position: relative;
+    }
+    .product-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .product-card:hover .product-img img { transform: scale(1.06); }
+    .product-badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: var(--yellow);
+      color: var(--blue);
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      text-transform: uppercase;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+    .product-price-tag {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      background: rgba(27,40,100,0.9);
+      backdrop-filter: blur(8px);
+      color: var(--yellow);
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: 0.35rem 0.8rem;
+      border-radius: 6px;
+      border: 1px solid rgba(255,215,0,0.3);
+    }
+    .product-body {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-cat {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 0.4rem;
+    }
+    .product-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.25rem;
+      color: var(--dark);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+    .product-specs {
+      background: #f8fafc;
+      padding: 0.6rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      color: var(--dark);
+      margin-bottom: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .product-specs span {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--muted);
+    }
+    .product-specs span strong { color: var(--dark); }
+    .product-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.5;
+      flex: 1;
+      margin-bottom: 1.2rem;
+    }
+    .product-card-actions {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+    .btn-add-to-quote {
+      flex: 1;
+      background: var(--yellow);
+      color: var(--blue);
+      border: none;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all var(--transition);
+    }
+    .btn-add-to-quote:hover {
+      background: var(--yellow-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255,215,0,0.4);
+    }
+    .btn-quick-wa {
+      width: 44px;
+      height: 44px;
+      background: #25D366;
+      color: white;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      text-decoration: none;
+      transition: all var(--transition);
+      flex-shrink: 0;
+    }
+    .btn-quick-wa:hover {
+      background: #1ebe5d;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg" alt="SMAPEC Logo" class="logo-img">
+      <div class="logo-text">
+        <span class="logo-title">SMAPEC</span>
+        <span class="logo-sub">Super Métal Aluminium</span>
+      </div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="catalogue.html" class="active">Catalogue</a></li>
+      <li><a href="realisations.html">Réalisations</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="devis.html">Mon Devis</a></li>
+      <li><a href="admin.html" style="opacity: 0.7; font-size: 0.8rem;"><i class="fas fa-lock"></i> Admin</a></li>
+    </ul>
+    <div class="nav-cta">
+      <button class="nav-cart-btn" onclick="openCartDrawer()" title="Voir mon panier de devis">
+        <i class="fas fa-file-invoice"></i>
+        <span class="cart-count">0</span>
+      </button>
+      <a href="tel:+221777044672" class="btn-nav-call">
+        <i class="fas fa-phone-alt"></i> +221 77 704 46 72
+      </a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu mobile">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="catalog-hero">
+  <div class="container">
+    <h1><i class="fas fa-th-large" style="color:var(--yellow)"></i> Catalogue des Ouvrages SMAPEC</h1>
+    <p>Sélectionnez les articles pour équiper votre maison ou chantier, ajoutez-les à votre panier de devis et obtenez le calcul automatique des coûts en FCFA.</p>
+    <div class="catalog-search-wrap">
+      <i class="fas fa-search"></i>
+      <input type="text" id="catalogSearch" placeholder="Rechercher une porte, baie vitrée, grille..." oninput="handleSearch(this.value)">
+    </div>
+  </div>
+</section>
+
+<!-- Catalogue Section -->
+<section class="section" style="padding-top: 1rem;">
+  <div class="container">
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all" onclick="applyFilter('all', this)">Tous les produits</button>
+      <button class="filter-btn" data-filter="portes" onclick="applyFilter('portes', this)">🚪 Portes</button>
+      <button class="filter-btn" data-filter="fenetres" onclick="applyFilter('fenetres', this)">🪟 Fenêtres & Baies</button>
+      <button class="filter-btn" data-filter="grilles" onclick="applyFilter('grilles', this)">🛡️ Grilles & Balcons</button>
+      <button class="filter-btn" data-filter="portails" onclick="applyFilter('portails', this)">⛩️ Portails</button>
+      <button class="filter-btn" data-filter="structures" onclick="applyFilter('structures', this)">🏗️ Structures Métalliques</button>
+      <button class="filter-btn" data-filter="verres" onclick="applyFilter('verres', this)">✨ Verres & Miroirs</button>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="products-grid" id="productsGridContainer">
+      <!-- Injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-bg" style="background-image:url('https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754075/photo_15_2026-09-18_17-53-40_cn0x5z.jpg')"></div>
+  <div class="cta-overlay"></div>
+  <div class="container">
+    <div class="cta-content">
+      <h2 class="cta-title">Besoin de dimensions spécifiques hors catalogue ?</h2>
+      <p class="cta-sub">SMAPEC fabrique l'ensemble de ses menuiseries et ossatures sur mesure dans nos ateliers à Dakar. Contactez M. Baye Sylla pour une étude technique personnalisée.</p>
+      <div class="cta-actions">
+        <a href="devis.html" class="btn-primary" style="background:var(--yellow); color:var(--blue)">
+          <i class="fas fa-file-invoice-dollar"></i> Finaliser mon Devis
+        </a>
+        <a href="https://wa.me/221777044672?text=Bonjour%20SMAPEC%2C%20j'ai%20un%20projet%20sur%20mesure..." target="_blank" class="btn-cta-wa">
+          <i class="fab fa-whatsapp"></i> Échanger sur WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-bottom" style="border-top:none">
+    <div class="container" style="justify-content:center; padding: 1.5rem">
+      <p>© 2026 SMAPEC – Super Métal Aluminium. Dakar, Sénégal. <a href="tel:+221777044672">+221 77 704 46 72</a></p>
+    </div>
+  </div>
+  <div class="footer-dev">
+    Développé par <a href="https://bambatechnologies.com" target="_blank" rel="noopener">bambatechnologies.com</a>
+  </div>
+</footer>
+
+<a href="https://wa.me/221777044672" target="_blank" class="wa-float"><i class="fab fa-whatsapp"></i></a>
+<div class="sticky-cta">
+  <a href="tel:+221777044672" class="sticky-btn sticky-call"><i class="fas fa-phone-alt"></i> Appeler</a>
+  <a href="devis.html" class="sticky-btn sticky-wa" style="background:var(--yellow); color:var(--blue)"><i class="fas fa-file-invoice"></i> Mon Devis</a>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+  let allCatalogProducts = [];
+  let currentCategory = 'all';
+  let searchQuery = '';
+
+  function formatCatalogPrice(p) {
+    if (!p || p === 0) return 'Sur devis';
+    return new Intl.NumberFormat('fr-FR').format(p) + ' FCFA';
+  }
+
+  function renderCatalogue(products) {
+    const container = document.getElementById('productsGridContainer');
+    if (!products || products.length === 0) {
+      container.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align:center; padding: 3rem; background:white; border-radius:12px">
+          <i class="fas fa-search" style="font-size:2.5rem; color:#cbd5e1; margin-bottom:1rem"></i>
+          <h3 style="font-family:'Oswald',sans-serif; color:var(--blue)">Aucun article ne correspond à votre recherche</h3>
+          <p style="color:var(--muted)">Essayez un autre mot-clé ou réinitialisez le filtre de catégorie.</p>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = products.map(prod => {
+      const dims = [];
+      if (prod.height) dims.push(`H: ${prod.height}m`);
+      if (prod.width) dims.push(`L: ${prod.width}m`);
+      const dimStr = dims.length ? dims.join(' × ') : (prod.dimensions || 'Sur mesure');
+      const priceFormatted = formatCatalogPrice(prod.price);
+
+      return `
+        <div class="product-card" data-cat="${prod.category}">
+          <div class="product-img">
+            <img src="${prod.image || 'https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg'}" alt="${prod.name}" loading="lazy">
+            ${prod.badge ? `<span class="product-badge">${prod.badge}</span>` : ''}
+            <span class="product-price-tag">${priceFormatted}</span>
+          </div>
+          <div class="product-body">
+            <div class="product-cat">${prod.categoryLabel || prod.category}</div>
+            <div class="product-name">${prod.name}</div>
+            
+            <div class="product-specs">
+              <span><i class="fas fa-ruler-combined"></i> Dimensions : <strong>${dimStr}</strong></span>
+              ${prod.thickness ? `<span><i class="fas fa-layer-group"></i> Épaisseur : <strong>${prod.thickness} mm</strong></span>` : ''}
+              ${prod.material ? `<span><i class="fas fa-hammer"></i> Matériau : <strong>${prod.material}</strong></span>` : ''}
+            </div>
+
+            <p class="product-desc">${prod.description || ''}</p>
+
+            <div class="product-card-actions">
+              <button class="btn-add-to-quote" onclick="handleAddProductToCart('${prod.id}')">
+                <i class="fas fa-cart-plus"></i> Ajouter au Devis
+              </button>
+              <a href="https://wa.me/221777044672?text=Bonjour%20M.%20Sylla%2C%20je%20suis%20int%C3%A9ress%C3%A9%20par%20l'article%20%3A%20${encodeURIComponent(prod.name)}" target="_blank" class="btn-quick-wa" title="Poser une question sur WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function handleAddProductToCart(id) {
+    const prod = allCatalogProducts.find(p => p.id === id);
+    if (!prod) return;
+
+    const dims = [];
+    if (prod.height) dims.push(`H: ${prod.height}m`);
+    if (prod.width) dims.push(`L: ${prod.width}m`);
+    const dimStr = dims.length ? dims.join(' × ') : (prod.dimensions || 'Sur mesure');
+
+    addToCart({
+      id: prod.id,
+      name: prod.name,
+      category: prod.categoryLabel || prod.category,
+      price: prod.price,
+      dimensions: dimStr,
+      material: prod.material,
+      image: prod.image
+    });
+  }
+
+  function applyFilter(cat, btn) {
+    currentCategory = cat;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    filterAndRender();
+  }
+
+  function handleSearch(val) {
+    searchQuery = (val || '').toLowerCase().trim();
+    filterAndRender();
+  }
+
+  function filterAndRender() {
+    let filtered = allCatalogProducts;
+    if (currentCategory !== 'all') {
+      filtered = filtered.filter(p => p.category === currentCategory);
+    }
+    if (searchQuery) {
+      filtered = filtered.filter(p => 
+        (p.name && p.name.toLowerCase().includes(searchQuery)) ||
+        (p.description && p.description.toLowerCase().includes(searchQuery)) ||
+        (p.material && p.material.toLowerCase().includes(searchQuery)) ||
+        (p.category && p.category.toLowerCase().includes(searchQuery))
+      );
+    }
+    renderCatalogue(filtered);
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    allCatalogProducts = await loadProducts();
+    
+    // Check URL param ?cat=
+    const params = new URLSearchParams(window.location.search);
+    const cat = params.get('cat');
+    if (cat) {
+      currentCategory = cat;
+      const targetBtn = document.querySelector(`.filter-btn[data-filter="${cat}"]`);
+      if (targetBtn) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        targetBtn.classList.add('active');
+      }
+    }
+    filterAndRender();
+  });
+</script>
+
+</body>
+</html>

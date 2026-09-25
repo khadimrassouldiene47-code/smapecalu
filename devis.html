@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon Devis en Ligne – SMAPEC | Menuiserie Métallique & Aluminium Dakar</title>
+  <meta name="description" content="Générez instantanément votre devis personnalisé en menuiserie métallique, aluminium et vitrerie à Dakar avec SMAPEC.">
+  <link rel="icon" type="image/jpeg" href="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .devis-hero {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--blue) 100%);
+      padding: 7rem 0 3rem;
+      color: white;
+      text-align: center;
+    }
+    .devis-hero h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2.4rem;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+    .devis-hero p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.8);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .devis-container {
+      max-width: 1000px;
+      margin: -2rem auto 4rem;
+      padding: 0 1rem;
+    }
+    .devis-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2rem;
+    }
+    @media (max-width: 860px) {
+      .devis-grid { grid-template-columns: 1fr; }
+    }
+    .card-box {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+      margin-bottom: 2rem;
+    }
+    .card-box h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.3rem;
+      color: var(--blue);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 0.75rem;
+    }
+    .devis-item-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .devis-item-row:last-child { border-bottom: none; }
+    .devis-item-thumb {
+      width: 70px;
+      height: 70px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #1a202c;
+      flex-shrink: 0;
+    }
+    .devis-item-details { flex: 1; min-width: 0; }
+    .devis-item-name { font-weight: 700; font-size: 0.95rem; color: var(--dark); }
+    .devis-item-dim { font-size: 0.8rem; color: var(--muted); margin: 0.2rem 0; }
+    .devis-item-price { font-weight: 800; color: var(--blue); font-size: 0.95rem; }
+    .devis-item-subtotal { font-weight: 800; color: var(--dark); font-size: 1rem; text-align: right; }
+    .btn-qty {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .btn-qty:hover { background: var(--yellow); border-color: var(--yellow); }
+    .devis-form-group {
+      margin-bottom: 1.2rem;
+    }
+    .devis-form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .devis-form-group input,
+    .devis-form-group select,
+    .devis-form-group textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      transition: all var(--transition);
+      background: #fbfcfe;
+    }
+    .devis-form-group input:focus,
+    .devis-form-group select:focus,
+    .devis-form-group textarea:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(43,57,144,0.1);
+      background: white;
+    }
+    .total-summary-card {
+      background: linear-gradient(135deg, #1b2864 0%, #2b3990 100%);
+      color: white;
+      border-radius: var(--radius-lg);
+      padding: 1.8rem;
+      box-shadow: var(--shadow-lg);
+    }
+    .total-summary-card h4 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      letter-spacing: 1px;
+      color: var(--yellow);
+    }
+    .total-summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.6rem;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.85);
+    }
+    .total-summary-row.grand {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--yellow);
+      border-top: 1px solid rgba(255,255,255,0.2);
+      padding-top: 0.8rem;
+      margin-top: 0.8rem;
+    }
+    .btn-generate-quote {
+      width: 100%;
+      background: var(--yellow);
+      color: var(--blue);
+      border: none;
+      padding: 1rem;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all var(--transition);
+      margin-top: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+    .btn-generate-quote:hover {
+      background: var(--yellow-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255,215,0,0.3);
+    }
+
+    /* Print / Preview modal */
+    .quote-preview {
+      display: none;
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      border-top: 6px solid var(--blue);
+      margin-top: 2rem;
+    }
+    .quote-preview.active { display: block; animation: fadeInUp 0.4s ease; }
+    .quote-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid var(--blue);
+      padding-bottom: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .quote-logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .quote-logo img {
+      width: 65px;
+      height: 65px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    .quote-logo-text h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.6rem;
+      color: var(--blue);
+      line-height: 1;
+    }
+    .quote-logo-text span {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--yellow-dark);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .quote-badge-num {
+      text-align: right;
+    }
+    .quote-num {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.3rem;
+      color: var(--blue);
+      font-weight: 700;
+    }
+    .quote-date { font-size: 0.85rem; color: var(--muted); }
+    .quote-parties {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .party-card {
+      background: #f8fafc;
+      padding: 1.2rem;
+      border-radius: 8px;
+      border-left: 3px solid var(--blue);
+    }
+    .party-card h5 {
+      font-family: 'Oswald', sans-serif;
+      color: var(--blue);
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .party-card p {
+      font-size: 0.85rem;
+      color: var(--dark);
+      margin: 0.2rem 0;
+    }
+    .quote-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2rem;
+    }
+    .quote-table th {
+      background: var(--blue);
+      color: white;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      padding: 0.8rem;
+      text-align: left;
+    }
+    .quote-table td {
+      padding: 0.85rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+    .quote-table tr:last-child td { border-bottom: 2px solid var(--blue); }
+    .quote-totals-box {
+      margin-left: auto;
+      max-width: 350px;
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 1.2rem;
+      margin-bottom: 2rem;
+    }
+    .quote-actions-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+    .btn-action-wa {
+      flex: 1;
+      background: #25D366;
+      color: white;
+      text-align: center;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 700;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      font-size: 1rem;
+      transition: all var(--transition);
+    }
+    .btn-action-wa:hover {
+      background: #1ebe5d;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37,211,102,0.4);
+    }
+    .btn-action-print {
+      background: var(--dark);
+      color: white;
+      border: none;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.95rem;
+      transition: all var(--transition);
+    }
+    .btn-action-print:hover { background: #000; transform: translateY(-2px); }
+
+    @media print {
+      body * { visibility: hidden; }
+      .quote-preview, .quote-preview * { visibility: visible; }
+      .quote-preview { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; border: none; padding: 0; }
+      .quote-actions-row, .navbar, .footer, .wa-float, .sticky-cta { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg" alt="SMAPEC Logo" class="logo-img">
+      <div class="logo-text">
+        <span class="logo-title">SMAPEC</span>
+        <span class="logo-sub">Super Métal Aluminium</span>
+      </div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="catalogue.html">Catalogue</a></li>
+      <li><a href="realisations.html">Réalisations</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="devis.html" class="active">Mon Devis</a></li>
+      <li><a href="admin.html" style="opacity: 0.7; font-size: 0.8rem;"><i class="fas fa-lock"></i> Admin</a></li>
+    </ul>
+    <div class="nav-cta">
+      <button class="nav-cart-btn" onclick="openCartDrawer()" title="Voir mon panier de devis">
+        <i class="fas fa-file-invoice"></i>
+        <span class="cart-count">0</span>
+      </button>
+      <a href="tel:+221777044672" class="btn-nav-call">
+        <i class="fas fa-phone-alt"></i> +221 77 704 46 72
+      </a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu mobile">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="devis-hero">
+  <div class="container">
+    <h1><i class="fas fa-file-invoice-dollar" style="color:var(--yellow)"></i> Votre Devis Personnalisé</h1>
+    <p>Configurez les menuiseries de votre maison ou chantier, visualisez l'estimation financière et recevez votre devis officiel immédiatement.</p>
+  </div>
+</section>
+
+<!-- Content -->
+<div class="devis-container">
+  <!-- Empty Cart Warning -->
+  <div id="emptyCartView" class="card-box" style="display:none; text-align:center; padding:3rem 1.5rem">
+    <i class="fas fa-shopping-basket" style="font-size:3.5rem; color:#cbd5e1; margin-bottom:1rem"></i>
+    <h2 style="font-family:'Oswald',sans-serif; color:var(--blue); margin-bottom:0.5rem">Votre panier de devis est vide</h2>
+    <p style="color:var(--muted); margin-bottom:1.5rem">Choisissez vos portes, fenêtres, grilles ou garde-corps depuis notre catalogue pour générer un devis sur mesure.</p>
+    <a href="catalogue.html" class="btn-primary" style="display:inline-flex; align-items:center; gap:0.5rem">
+      <i class="fas fa-th-large"></i> Découvrir le Catalogue
+    </a>
+  </div>
+
+  <!-- Active Devis Workspace -->
+  <div id="activeDevisView">
+    <div class="devis-grid">
+      <!-- Left Column: Items List -->
+      <div class="card-box">
+        <h3><i class="fas fa-list-check"></i> Articles Sélectionnés (<span id="cartCountTitle">0</span>)</h3>
+        <div id="devisItemsList">
+          <!-- Rendered dynamically -->
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:1.5rem; padding-top:1rem; border-top:1px solid var(--border)">
+          <a href="catalogue.html" style="color:var(--blue); font-weight:700; font-size:0.85rem; text-decoration:none; display:flex; align-items:center; gap:0.4rem">
+            <i class="fas fa-plus-circle"></i> Ajouter d'autres produits
+          </a>
+          <button onclick="clearDevisCart()" style="background:none; border:none; color:#ef4444; font-size:0.85rem; font-weight:600; cursor:pointer">
+            <i class="fas fa-trash-alt"></i> Tout effacer
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Column: Customer Info & Total -->
+      <div>
+        <div class="card-box">
+          <h3><i class="fas fa-user-edit"></i> Coordonnées du Client</h3>
+          <form id="devisClientForm" onsubmit="event.preventDefault(); generateOfficialQuote();">
+            <div class="devis-form-group">
+              <label for="clientName">Nom Complet / Entreprise *</label>
+              <input type="text" id="clientName" required placeholder="Ex: M. Amadou Diallo ou Entreprise BTP">
+            </div>
+            <div class="devis-form-group">
+              <label for="clientPhone">Numéro de Téléphone (WhatsApp) *</label>
+              <input type="tel" id="clientPhone" required placeholder="+221 77 XXX XX XX" value="+221 ">
+            </div>
+            <div class="devis-form-group">
+              <label for="clientCity">Ville / Quartier du Projet *</label>
+              <input type="text" id="clientCity" required placeholder="Ex: Dakar, Almadies, Mermoz, Thiès...">
+            </div>
+            <div class="devis-form-group">
+              <label for="projectType">Type de Projet</label>
+              <select id="projectType">
+                <option value="Villa individuelle">Villa individuelle / Maison</option>
+                <option value="Immeuble résidentiel">Immeuble résidentiel (R+)</option>
+                <option value="Rénovation appartement">Rénovation d'appartement</option>
+                <option value="Local commercial / Bureau">Local commercial / Bureau</option>
+                <option value="Hangar / Entrepôt industriel">Hangar / Entrepôt industriel</option>
+                <option value="Autre projet spécifique">Autre projet spécifique</option>
+              </select>
+            </div>
+            <div class="devis-form-group">
+              <label for="clientNotes">Précisions ou dimensions spéciales</label>
+              <textarea id="clientNotes" rows="2" placeholder="Couleur d'aluminium souhaitée, serrure spécifique, délai souhaité..."></textarea>
+            </div>
+
+            <!-- Total Card -->
+            <div class="total-summary-card">
+              <h4>Résumé de l'Estimation</h4>
+              <div class="total-summary-row">
+                <span>Total articles chiffrés :</span>
+                <span id="summaryItemsTotal">0 FCFA</span>
+              </div>
+              <div class="total-summary-row">
+                <span>Fabrication & Assemblage :</span>
+                <span>Inclus</span>
+              </div>
+              <div class="total-summary-row">
+                <span>Garantie travaux SMAPEC :</span>
+                <span style="color:var(--yellow)">2 Ans</span>
+              </div>
+              <div class="total-summary-row grand">
+                <span>TOTAL ESTIMÉ :</span>
+                <span id="summaryGrandTotal">0 FCFA</span>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-generate-quote">
+              <i class="fas fa-file-signature"></i> Générer mon Devis Officiel
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Official Quote Sheet (Rendered after click) -->
+    <div id="officialQuoteSection" class="quote-preview">
+      <div class="quote-header">
+        <div class="quote-logo">
+          <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg" alt="SMAPEC">
+          <div class="quote-logo-text">
+            <h2>SMAPEC</h2>
+            <span>Super Métal Aluminium & Pose Entretien Construction</span>
+            <div style="font-size:0.75rem; color:var(--muted); margin-top:0.3rem">
+              Dakar, Sénégal • NINEA / RCCM Enregistré<br>
+              Tél: +221 77 704 46 72 / 78 440 44 94 • Directeur: Baye Sylla
+            </div>
+          </div>
+        </div>
+        <div class="quote-badge-num">
+          <div style="font-size:0.75rem; text-transform:uppercase; color:var(--muted); font-weight:700">Devis Pro-Forma</div>
+          <div class="quote-num" id="printQuoteNum">DEV-2026-XXXX</div>
+          <div class="quote-date" id="printQuoteDate">Date: 25/09/2026</div>
+          <div style="font-size:0.75rem; color:#10b981; font-weight:700; margin-top:0.2rem">Validité: 30 jours</div>
+        </div>
+      </div>
+
+      <div class="quote-parties">
+        <div class="party-card">
+          <h5><i class="fas fa-building"></i> Entreprise Prestataire</h5>
+          <p><strong>SMAPEC SARL</strong></p>
+          <p>Direction Générale : Baye Sylla</p>
+          <p>Atelier & Showroom : Dakar, Sénégal</p>
+          <p>Email : smapecalu@gmail.com</p>
+          <p>Téléphone : +221 77 704 46 72</p>
+        </div>
+        <div class="party-card">
+          <h5><i class="fas fa-user-tag"></i> Client & Chantier</h5>
+          <p><strong>Client :</strong> <span id="printClientName">—</span></p>
+          <p><strong>Téléphone :</strong> <span id="printClientPhone">—</span></p>
+          <p><strong>Localisation :</strong> <span id="printClientCity">—</span></p>
+          <p><strong>Type de Projet :</strong> <span id="printProjectType">—</span></p>
+        </div>
+      </div>
+
+      <table class="quote-table">
+        <thead>
+          <tr>
+            <th>Article & Caractéristiques</th>
+            <th>Dimensions</th>
+            <th style="text-align:center">Qté</th>
+            <th style="text-align:right">Prix Unitaire</th>
+            <th style="text-align:right">Total</th>
+          </tr>
+        </thead>
+        <tbody id="printTableBody">
+          <!-- Rendered items -->
+        </tbody>
+      </table>
+
+      <div class="quote-totals-box">
+        <div class="total-summary-row">
+          <span>Sous-total articles :</span>
+          <strong id="printSubtotal">0 FCFA</strong>
+        </div>
+        <div class="total-summary-row">
+          <span>Pose & Installation :</span>
+          <span>Sur confirmation</span>
+        </div>
+        <div class="total-summary-row grand" style="color:var(--blue); border-color:var(--blue)">
+          <span>TOTAL ESTIMÉ :</span>
+          <strong id="printGrandTotal">0 FCFA</strong>
+        </div>
+      </div>
+
+      <div style="font-size:0.78rem; color:var(--muted); line-height:1.6; border-top:1px solid var(--border); padding-top:1rem">
+        <strong>Conditions Générales :</strong> Les dimensions finales seront confirmées par un technicien métreur SMAPEC avant fabrication. Acompte de 50% à la commande, solde à la pose. Matériaux haute qualité garantis contre la rouille et les déformations.
+      </div>
+
+      <!-- Direct Actions -->
+      <div class="quote-actions-row">
+        <a id="btnSendWhatsApp" href="#" target="_blank" class="btn-action-wa">
+          <i class="fab fa-whatsapp" style="font-size:1.4rem"></i>
+          <span>Envoyer le Devis à SMAPEC sur WhatsApp</span>
+        </a>
+        <button onclick="window.print()" class="btn-action-print">
+          <i class="fas fa-print"></i> Imprimer / PDF
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-bottom" style="border-top:none">
+    <div class="container" style="justify-content:center; padding: 1.5rem">
+      <p>© 2026 SMAPEC – Super Métal Aluminium. Dakar, Sénégal. <a href="tel:+221777044672">+221 77 704 46 72</a></p>
+    </div>
+  </div>
+  <div class="footer-dev">
+    Développé par <a href="https://bambatechnologies.com" target="_blank" rel="noopener">bambatechnologies.com</a>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+  let lastGeneratedQuote = null;
+
+  function renderDevisPage() {
+    const cart = getCart();
+    const emptyView = document.getElementById('emptyCartView');
+    const activeView = document.getElementById('activeDevisView');
+    const list = document.getElementById('devisItemsList');
+    const countTitle = document.getElementById('cartCountTitle');
+
+    if (!cart || cart.length === 0) {
+      emptyView.style.display = 'block';
+      activeView.style.display = 'none';
+      return;
+    }
+
+    emptyView.style.display = 'none';
+    activeView.style.display = 'block';
+    countTitle.textContent = cart.length;
+
+    let subtotal = 0;
+
+    list.innerHTML = cart.map(item => {
+      const p = parseFloat(item.price) || 0;
+      const q = parseInt(item.quantity) || 1;
+      const lineTotal = p * q;
+      if (p > 0) subtotal += lineTotal;
+
+      return `
+        <div class="devis-item-row">
+          <img src="${item.image || 'https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg'}" alt="${item.name}" class="devis-item-thumb">
+          <div class="devis-item-details">
+            <div class="devis-item-name">${item.name}</div>
+            <div class="devis-item-dim">
+              ${item.dimensions ? `<i class="fas fa-ruler-combined"></i> ${item.dimensions}` : ''}
+              ${item.material ? ` • ${item.material}` : ''}
+            </div>
+            <div class="devis-item-price">${p > 0 ? formatPrice(p) : 'Prix sur devis'}</div>
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-top:0.4rem">
+              <button class="btn-qty" onclick="changeQty('${item.id}', ${q - 1})">-</button>
+              <span style="font-weight:700; font-size:0.9rem; min-width:20px; text-align:center">${q}</span>
+              <button class="btn-qty" onclick="changeQty('${item.id}', ${q + 1})">+</button>
+              <button onclick="removeFromDevis('${item.id}')" style="background:none; border:none; color:#ef4444; margin-left:0.8rem; cursor:pointer; font-size:0.85rem">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+          <div class="devis-item-subtotal">
+            ${p > 0 ? formatPrice(lineTotal) : 'Sur devis'}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    const formattedTotal = subtotal > 0 ? formatPrice(subtotal) : 'Sur devis';
+    document.getElementById('summaryItemsTotal').textContent = formattedTotal;
+    document.getElementById('summaryGrandTotal').textContent = formattedTotal;
+  }
+
+  function changeQty(id, newQty) {
+    if (newQty <= 0) {
+      removeFromCart(id);
+    } else {
+      updateQuantity(id, newQty);
+    }
+    renderDevisPage();
+  }
+
+  function removeFromDevis(id) {
+    removeFromCart(id);
+    renderDevisPage();
+  }
+
+  function clearDevisCart() {
+    if (confirm("Voulez-vous vider tous les articles du devis ?")) {
+      clearCart();
+      renderDevisPage();
+    }
+  }
+
+  function generateOfficialQuote() {
+    const cart = getCart();
+    if (!cart || cart.length === 0) {
+      alert("Votre panier est vide.");
+      return;
+    }
+
+    const name = document.getElementById('clientName').value.trim();
+    const phone = document.getElementById('clientPhone').value.trim();
+    const city = document.getElementById('clientCity').value.trim();
+    const project = document.getElementById('projectType').value;
+    const notes = document.getElementById('clientNotes').value.trim();
+
+    if (!name || !phone || !city) {
+      alert("Veuillez renseigner votre nom, téléphone et ville.");
+      return;
+    }
+
+    // Reference ID
+    const randomNum = Math.floor(1000 + Math.random() * 9000);
+    const quoteNum = `DEV-2026-${randomNum}`;
+    const today = new Date().toLocaleDateString('fr-FR');
+
+    document.getElementById('printQuoteNum').textContent = quoteNum;
+    document.getElementById('printQuoteDate').textContent = `Date : ${today}`;
+    document.getElementById('printClientName').textContent = name;
+    document.getElementById('printClientPhone').textContent = phone;
+    document.getElementById('printClientCity').textContent = city;
+    document.getElementById('printProjectType').textContent = project;
+
+    let total = 0;
+    const tbody = document.getElementById('printTableBody');
+    tbody.innerHTML = cart.map(item => {
+      const p = parseFloat(item.price) || 0;
+      const q = parseInt(item.quantity) || 1;
+      const lineTotal = p * q;
+      if (p > 0) total += lineTotal;
+
+      return `
+        <tr>
+          <td>
+            <strong>${item.name}</strong><br>
+            <small style="color:var(--muted)">${item.category ? item.category.toUpperCase() : ''} ${item.material ? '• ' + item.material : ''}</small>
+          </td>
+          <td>${item.dimensions || 'Sur mesure'}</td>
+          <td style="text-align:center">${q}</td>
+          <td style="text-align:right">${p > 0 ? formatPrice(p) : 'Sur devis'}</td>
+          <td style="text-align:right"><strong>${p > 0 ? formatPrice(lineTotal) : 'Sur devis'}</strong></td>
+        </tr>
+      `;
+    }).join('');
+
+    const formattedGrand = total > 0 ? formatPrice(total) : 'Sur devis';
+    document.getElementById('printSubtotal').textContent = formattedGrand;
+    document.getElementById('printGrandTotal').textContent = formattedGrand;
+
+    // Show preview section and scroll to it
+    const quoteSection = document.getElementById('officialQuoteSection');
+    quoteSection.classList.add('active');
+    quoteSection.scrollIntoView({ behavior: 'smooth' });
+
+    // Prepare WhatsApp Message
+    let itemsText = cart.map(item => {
+      const p = parseFloat(item.price) || 0;
+      const q = parseInt(item.quantity) || 1;
+      const priceStr = p > 0 ? formatPrice(p * q) : 'Prix sur devis';
+      const dimStr = item.dimensions ? ` (${item.dimensions})` : '';
+      return `• ${q}x ${item.name}${dimStr} : ${priceStr}`;
+    }).join('\n');
+
+    let waMessage = `Bonjour M. Baye Sylla (SMAPEC),\n`;
+    waMessage += `Je viens de générer un devis pro-forma sur votre site web :\n\n`;
+    waMessage += `📋 *RÉFÉRENCE : ${quoteNum}*\n`;
+    waMessage += `👤 *Client :* ${name}\n`;
+    waMessage += `📞 *Téléphone :* ${phone}\n`;
+    waMessage += `📍 *Chantier / Ville :* ${city}\n`;
+    waMessage += `🏗️ *Projet :* ${project}\n`;
+    if (notes) waMessage += `📝 *Notes :* ${notes}\n`;
+    waMessage += `\n*ARTICLES SÉLECTIONNÉS :*\n${itemsText}\n\n`;
+    waMessage += `💰 *TOTAL ESTIMÉ :* ${formattedGrand}\n\n`;
+    waMessage += `Merci de me confirmer la faisabilité, le délai d'intervention et les modalités d'acompte.`;
+
+    const waLink = `https://wa.me/221777044672?text=${encodeURIComponent(waMessage)}`;
+    document.getElementById('btnSendWhatsApp').href = waLink;
+
+    // Save to local quote history
+    try {
+      const history = JSON.parse(localStorage.getItem('smapec_quotes_history') || '[]');
+      history.unshift({
+        id: quoteNum,
+        date: today,
+        client: name,
+        phone: phone,
+        city: city,
+        project: project,
+        total: total,
+        itemsCount: cart.length
+      });
+      localStorage.setItem('smapec_quotes_history', JSON.stringify(history.slice(0, 30)));
+    } catch(e) {}
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderDevisPage();
+  });
+</script>
+
+</body>
+</html>

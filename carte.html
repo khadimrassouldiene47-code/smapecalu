@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Baye Sylla | Directeur Général SMAPEC</title>
+  <meta name="description" content="Carte de visite digitale de Baye Sylla, Directeur Général de SMAPEC – Super Métal Aluminium, Dakar Sénégal.">
+  <link rel="icon" type="image/jpeg" href="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue: #2B3990;
+      --yellow: #FFD700;
+      --dark: #1A202C;
+      --bg: #F4F7FE;
+      --white: #FFFFFF;
+      --wa: #25D366;
+      --border: #E2E8F0;
+      --muted: #718096;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body, html {
+      margin: 0; padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--bg);
+      color: var(--dark);
+      display: flex; justify-content: center; min-height: 100vh;
+    }
+    .cv-card {
+      width: 100%; max-width: 480px;
+      background-color: var(--white);
+      min-height: 100vh; position: relative;
+      box-shadow: 0 10px 40px rgba(43,57,144,0.1);
+      display: flex; flex-direction: column; overflow-x: hidden;
+      padding-bottom: 8rem;
+    }
+    /* Back link */
+    .back-link {
+      position: absolute; top: 1.2rem; left: 1.2rem; z-index: 20;
+      display: flex; align-items: center; gap: 0.4rem;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white; font-size: 0.8rem; font-weight: 700;
+      padding: 0.4rem 0.9rem; border-radius: 50px;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    .back-link:hover { background: rgba(255,255,255,0.25); }
+
+    .cv-cover { height: 14rem; width: 100%; background-color: var(--blue); border-bottom: 5px solid var(--yellow); position: relative; overflow: hidden; }
+    .cv-cover img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; }
+
+    .cv-profile-area { position: relative; margin-top: -6rem; display: flex; flex-direction: column; align-items: center; z-index: 10; }
+    .cv-avatar-border {
+      width: 9.5rem; height: 9.5rem; border-radius: 50%;
+      background-color: var(--white); border: 4px solid var(--white);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 5px;
+    }
+    .cv-avatar-border img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+
+    .cv-text-center { text-align: center; padding: 0 1.5rem; margin-top: 1rem; }
+    .cv-name { font-family: 'Oswald', sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--blue); margin: 0; text-transform: uppercase; }
+    .cv-job-title { font-size: 1rem; font-weight: 700; color: var(--dark); margin-top: 0.4rem; text-transform: uppercase; }
+    .cv-company {
+      font-size: 0.9rem; font-weight: 700; color: var(--blue); margin-top: 0.2rem;
+      display: inline-block; padding: 3px 10px; border-radius: 20px;
+      background-color: rgba(255,215,0,0.2); border: 1px solid var(--yellow);
+    }
+    .cv-slogan { font-size: 0.85rem; font-weight: 600; color: var(--muted); margin-top: 12px; text-transform: uppercase; letter-spacing: 1px; }
+
+    .quick-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.2rem; margin-top: 2rem; padding: 0 1.5rem; }
+    .action-wrapper { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .action-btn-circle {
+      width: 50px; height: 50px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white); font-size: 1.2rem; text-decoration: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: transform 0.2s;
+    }
+    .action-btn-circle:hover { transform: translateY(-3px); }
+    .btn-call { background: var(--blue); }
+    .btn-wa { background: var(--wa); }
+    .btn-email { background: var(--yellow); color: var(--blue); }
+    .btn-map { background: var(--dark); }
+    .btn-web { background: var(--blue-light, #3d4faa); }
+    .action-label { font-size: 0.7rem; font-weight: 700; color: var(--muted); text-transform: uppercase; }
+
+    .cv-section { padding: 0 1.5rem; margin-top: 2.5rem; margin-bottom: 1.5rem; }
+    .cv-section-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.2rem; font-weight: 700; color: var(--blue); margin-bottom: 1.2rem;
+      text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 10px;
+    }
+    .cv-section-title i { color: var(--yellow); }
+    .cv-section-title::after { content: ""; flex: 1; height: 2px; background-color: var(--border); }
+
+    .cv-contact-link {
+      display: flex; align-items: center; padding: 1rem; border-radius: 12px;
+      background-color: var(--bg); border: 1px solid var(--border);
+      text-decoration: none; margin-bottom: 0.8rem; transition: all 0.3s;
+    }
+    .cv-contact-link:hover { border-color: var(--blue); box-shadow: 0 4px 12px rgba(43,57,144,0.08); }
+    .cv-icon-box {
+      width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      background-color: rgba(43,57,144,0.1); color: var(--blue); font-size: 1.2rem;
+    }
+    .cv-contact-texts { display: flex; flex-direction: column; margin-left: 1rem; word-break: break-word; }
+    .cv-contact-label { font-size: 0.7rem; font-weight: 700; color: var(--muted); text-transform: uppercase; }
+    .cv-contact-val { font-size: 0.95rem; font-weight: 700; color: var(--dark); margin-top: 4px; }
+
+    .cv-carousel { display: flex; gap: 1rem; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 15px; scrollbar-width: none; }
+    .cv-carousel::-webkit-scrollbar { display: none; }
+    .cv-slide {
+      flex: 0 0 100%; scroll-snap-align: center; height: 320px;
+      border-radius: 12px; overflow: hidden;
+      background-color: #111; border: 2px solid var(--yellow);
+      display: flex; justify-content: center; align-items: center;
+    }
+    .cv-slide img { width: 100%; height: 100%; object-fit: contain; }
+
+    .cv-qr-section {
+      text-align: center; background-color: var(--bg); padding: 2rem 1.5rem;
+      border-radius: 16px; border: 1px solid var(--border); border-top: 4px solid var(--blue);
+    }
+    .cv-qr-box { display: inline-block; padding: 12px; border-radius: 12px; background-color: var(--white); margin-top: 1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    .cv-qr-box img { width: 150px; height: 150px; display: block; border-radius: 8px; }
+    .cv-qr-title { font-family: 'Oswald', sans-serif; font-size: 1.2rem; font-weight: 700; margin: 0; color: var(--blue); text-transform: uppercase; }
+    .cv-qr-text { font-size: 0.85rem; color: var(--dark); margin-top: 0.8rem; line-height: 1.5; font-weight: 500; }
+
+    .cv-validity { text-align: center; font-size: 0.8rem; font-weight: 600; color: var(--muted); margin: 1rem 0 2rem 0; }
+
+    .cv-footer-fixed {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+      display: flex; justify-content: center; padding: 0.5rem 1rem 1.5rem 1rem; pointer-events: none;
+    }
+    .cv-footer-pill {
+      width: 100%; max-width: 440px;
+      background: rgba(255,255,255,0.97); backdrop-filter: blur(10px);
+      border-radius: 50px; padding: 0.6rem; display: flex; gap: 0.5rem;
+      pointer-events: auto; border: 1px solid var(--border);
+      box-shadow: 0 -5px 25px rgba(0,0,0,0.1);
+    }
+    .cv-btn-footer {
+      flex: 1; padding: 1rem 0.5rem; border-radius: 40px; font-weight: 700; font-size: 0.85rem;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      text-decoration: none; border: none; cursor: pointer; text-transform: uppercase; color: white;
+    }
+    .cv-btn-save { background-color: var(--blue); }
+    .cv-btn-wa { background-color: var(--wa); }
+
+    @media (min-width: 481px) {
+      .cv-card { border-radius: 20px; margin: 20px 0; min-height: auto; border: 1px solid var(--border); }
+      .cv-cover { border-top-left-radius: 20px; border-top-right-radius: 20px; }
+      .cv-footer-fixed { position: sticky; bottom: 0; padding: 1rem; background: transparent; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cv-card">
+  <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Site</a>
+
+  <div class="cv-cover">
+    <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754075/photo_15_2026-09-18_17-53-40_cn0x5z.jpg" alt="Couverture SMAPEC" loading="lazy">
+  </div>
+
+  <div class="cv-profile-area">
+    <div class="cv-avatar-border">
+      <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg" alt="Logo SMAPEC" loading="lazy">
+    </div>
+  </div>
+
+  <div class="cv-text-center">
+    <h1 class="cv-name">Baye Sylla</h1>
+    <div class="cv-job-title">Directeur Général</div>
+    <div class="cv-company">SMAPEC</div>
+    <div class="cv-slogan">Passion · Énergie · Courage</div>
+  </div>
+
+  <div class="quick-actions">
+    <div class="action-wrapper">
+      <a href="tel:+221777044672" class="action-btn-circle btn-call" title="Appeler"><i class="fas fa-phone-alt"></i></a>
+      <span class="action-label">Appel</span>
+    </div>
+    <div class="action-wrapper">
+      <a href="https://wa.me/221777044672" target="_blank" class="action-btn-circle btn-wa" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      <span class="action-label">WhatsApp</span>
+    </div>
+    <div class="action-wrapper">
+      <a href="mailto:smapecalu@gmail.com" class="action-btn-circle btn-email" title="Email"><i class="fas fa-envelope"></i></a>
+      <span class="action-label">Email</span>
+    </div>
+    <div class="action-wrapper">
+      <a href="https://maps.google.com/?q=14.774294,-17.290739" target="_blank" class="action-btn-circle btn-map" title="Localisation"><i class="fas fa-map-marker-alt"></i></a>
+      <span class="action-label">Adresse</span>
+    </div>
+    <div class="action-wrapper">
+      <a href="http://www.smapecalu.com" target="_blank" class="action-btn-circle btn-web" title="Site Web"><i class="fas fa-globe"></i></a>
+      <span class="action-label">Site Web</span>
+    </div>
+  </div>
+
+  <div class="cv-section">
+    <h3 class="cv-section-title"><i class="fa-solid fa-address-book"></i> Contact &amp; Infos</h3>
+
+    <a href="https://wa.me/221777044672" target="_blank" class="cv-contact-link">
+      <div class="cv-icon-box" style="color:var(--wa); background:rgba(37,211,102,0.1)"><i class="fab fa-whatsapp"></i></div>
+      <div class="cv-contact-texts">
+        <span class="cv-contact-label">Téléphone &amp; WhatsApp</span>
+        <span class="cv-contact-val">+221 77 704 46 72</span>
+      </div>
+    </a>
+    <a href="mailto:smapecalu@gmail.com" class="cv-contact-link">
+      <div class="cv-icon-box"><i class="fa-solid fa-envelope"></i></div>
+      <div class="cv-contact-texts">
+        <span class="cv-contact-label">Email</span>
+        <span class="cv-contact-val">smapecalu@gmail.com</span>
+      </div>
+    </a>
+    <a href="http://www.smapecalu.com" target="_blank" class="cv-contact-link">
+      <div class="cv-icon-box" style="color:var(--yellow); background:rgba(255,215,0,0.15)"><i class="fa-solid fa-globe"></i></div>
+      <div class="cv-contact-texts">
+        <span class="cv-contact-label">Site Web</span>
+        <span class="cv-contact-val">www.smapecalu.com</span>
+      </div>
+    </a>
+    <a href="https://maps.google.com/?q=14.774294,-17.290739" target="_blank" class="cv-contact-link">
+      <div class="cv-icon-box"><i class="fa-solid fa-location-dot"></i></div>
+      <div class="cv-contact-texts">
+        <span class="cv-contact-label">Adresse</span>
+        <span class="cv-contact-val">Dakar – Sénégal</span>
+      </div>
+    </a>
+  </div>
+
+  <div class="cv-section" style="padding-right:0">
+    <h3 class="cv-section-title"><i class="fa-solid fa-images"></i> Nos Réalisations</h3>
+    <div class="cv-carousel">
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754519/photo_2026-09-18_17-20-23_nqtvp6.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754212/photo_2026-09-18_17-20-46_sfuxeh.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754503/photo_2026-09-18_17-20-37_fburgd.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754515/photo_2026-09-18_17-20-31_dkwued.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754080/photo_11_2026-09-18_17-53-40_sbyyqf.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754075/photo_15_2026-09-18_17-53-40_cn0x5z.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754053/photo_22_2026-09-18_17-53-40_s75w8g.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754050/photo_23_2026-09-18_17-53-40_g5lswr.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754066/photo_16_2026-09-18_17-53-40_a3kik6.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754083/photo_12_2026-09-18_17-53-40_zo4d06.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754077/photo_13_2026-09-18_17-53-40_e5prwm.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754072/photo_14_2026-09-18_17-53-40_qvmc5k.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754101/photo_4_2026-09-18_17-53-40_rbaf1s.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754098/photo_7_2026-09-18_17-53-40_a9sy3i.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754069/photo_17_2026-09-18_17-53-40_akho4f.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754209/photo_2026-09-18_17-20-53_x2tbgs.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754089/photo_10_2026-09-18_17-53-40_bmtcfo.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754092/photo_8_2026-09-18_17-53-40_sxc91j.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754086/photo_9_2026-09-18_17-53-40_i2gmyv.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754064/photo_18_2026-09-18_17-53-40_ik0yfx.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754061/photo_19_2026-09-18_17-53-40_h8ugaj.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754054/photo_20_2026-09-18_17-53-40_kuybjp.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754047/photo_1_2026-09-18_17-53-40_aq2knc.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754040/photo_5_2026-09-18_17-53-40_vffxi9.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754041/photo_2_2026-09-18_17-53-40_lkeljs.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+      <div class="cv-slide"><img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754045/photo_3_2026-09-18_17-53-40_repvym.jpg" loading="lazy" alt="Réalisation SMAPEC"></div>
+    </div>
+  </div>
+
+  <div class="cv-section">
+    <div class="cv-qr-section">
+      <h3 class="cv-qr-title">Scanner le profil</h3>
+      <p class="cv-qr-text">Scannez ce QR Code pour contacter SMAPEC directement via WhatsApp.</p>
+      <div class="cv-qr-box">
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://wa.me/221777044672&color=2B3990&bgcolor=FFFFFF" alt="QR Code WhatsApp SMAPEC" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <div class="cv-validity">
+    <i class="fa-regular fa-clock" style="color:var(--blue)"></i> Fiche valide jusqu'en Septembre 2027
+  </div>
+
+  <div class="footer-dev" style="background:#fff; border-top:1px solid #e2e8f0; padding:1rem 0; margin-bottom:4.5rem; text-align:center; font-size:0.75rem; color:#64748b">
+    Développé par <a href="https://bambatechnologies.com" target="_blank" rel="noopener" style="color:var(--blue); font-weight:700">bambatechnologies.com</a>
+  </div>
+</div>
+
+<div class="cv-footer-fixed">
+  <div class="cv-footer-pill">
+    <button type="button" onclick="downloadVCard()" class="cv-btn-footer cv-btn-save">
+      <i class="fa-solid fa-address-card"></i> VCard
+    </button>
+    <a href="https://wa.me/221777044672" target="_blank" class="cv-btn-footer cv-btn-wa">
+      <i class="fab fa-whatsapp" style="font-size:1.2rem"></i> WhatsApp
+    </a>
+  </div>
+</div>
+
+<script>
+  function downloadVCard() {
+    const vCardData = `BEGIN:VCARD\nVERSION:3.0\nFN:Baye Sylla\nORG:SMAPEC (Super Métal Aluminium)\nTITLE:Directeur Général\nTEL;TYPE=CELL,VOICE,PREF:+221777044672\nTEL;TYPE=WA,VOICE:+221777044672\nEMAIL;TYPE=WORK:smapecalu@gmail.com\nURL:http://www.smapecalu.com\nADR;TYPE=WORK:;;Dakar;Dakar;;;Sénégal\nNOTE:Passion Energie Courage. L'expert en métal et aluminium.\nPHOTO;VALUE=URI:https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg\nEND:VCARD`;
+    const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.style.display = 'none';
+    link.href = url;
+    link.setAttribute('download', 'Contact_Baye_Sylla_SMAPEC.vcf');
+    document.body.appendChild(link);
+    link.click();
+    setTimeout(() => { document.body.removeChild(link); window.URL.revokeObjectURL(url); }, 100);
+  }
+</script>
+</body>
+</html>

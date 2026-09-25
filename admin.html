@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administration SMAPEC – Gestion Produits, Prix & Devis</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/jpeg" href="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body { background: #f1f5f9; color: var(--dark); }
+    .admin-nav {
+      background: var(--blue);
+      color: white;
+      padding: 0.8rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    .admin-nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: white;
+      text-decoration: none;
+    }
+    .admin-nav-brand img { width: 42px; height: 42px; border-radius: 6px; }
+    .admin-nav-brand h1 { font-family: 'Oswald', sans-serif; font-size: 1.3rem; margin: 0; }
+    .admin-nav-brand span { font-size: 0.75rem; color: var(--yellow); font-weight: 700; text-transform: uppercase; }
+    .admin-nav-actions { display: flex; align-items: center; gap: 1rem; }
+    .admin-badge-role {
+      background: rgba(255,215,0,0.2);
+      color: var(--yellow);
+      border: 1px solid var(--yellow);
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .admin-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+    .admin-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+    }
+    @media (max-width: 900px) {
+      .admin-kpis { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 500px) {
+      .admin-kpis { grid-template-columns: 1fr; }
+    }
+    .kpi-card {
+      background: white;
+      border-radius: var(--radius-md);
+      padding: 1.4rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      border-left: 4px solid var(--blue);
+    }
+    .kpi-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: rgba(43,57,144,0.08);
+      color: var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+    .kpi-data h3 { font-family: 'Oswald', sans-serif; font-size: 1.6rem; color: var(--dark); margin: 0; line-height: 1; }
+    .kpi-data p { font-size: 0.8rem; color: var(--muted); margin: 0.3rem 0 0; text-transform: uppercase; font-weight: 600; }
+
+    /* Tabs */
+    .admin-tabs {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 2px solid #e2e8f0;
+      margin-bottom: 2rem;
+      overflow-x: auto;
+    }
+    .admin-tab-btn {
+      background: none;
+      border: none;
+      padding: 0.8rem 1.4rem;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      position: relative;
+      transition: all var(--transition);
+      white-space: nowrap;
+    }
+    .admin-tab-btn:hover { color: var(--blue); }
+    .admin-tab-btn.active {
+      color: var(--blue);
+      font-weight: 700;
+    }
+    .admin-tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--blue);
+      border-radius: 3px 3px 0 0;
+    }
+
+    /* Tab Contents */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeInUp 0.3s ease; }
+
+    /* Product Table */
+    .table-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .table-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn-add-prod {
+      background: var(--blue);
+      color: white;
+      border: none;
+      padding: 0.7rem 1.4rem;
+      border-radius: 8px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all var(--transition);
+    }
+    .btn-add-prod:hover { background: var(--blue-dark); transform: translateY(-2px); }
+    .products-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    .products-table th {
+      background: #f8fafc;
+      padding: 0.85rem;
+      text-align: left;
+      font-family: 'Oswald', sans-serif;
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    .products-table td {
+      padding: 1rem 0.85rem;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: middle;
+    }
+    .products-table tr:hover td { background: #fbfcfe; }
+    .prod-thumb {
+      width: 55px;
+      height: 55px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #111;
+    }
+    .action-btn {
+      background: none;
+      border: 1px solid var(--border);
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      transition: all var(--transition);
+      margin-right: 0.3rem;
+    }
+    .action-btn.edit:hover { background: var(--blue); color: white; border-color: var(--blue); }
+    .action-btn.del:hover { background: #ef4444; color: white; border-color: #ef4444; }
+
+    /* Modal Form */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 650px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2rem;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+    }
+    .modal-card h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.4rem;
+      color: var(--blue);
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--dark);
+      margin-bottom: 0.35rem;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.9rem;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--blue);
+    }
+    .gallery-picker {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      max-height: 120px;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      padding: 0.5rem;
+      border-radius: 8px;
+    }
+    .gallery-picker img {
+      width: 100%;
+      height: 45px;
+      object-fit: cover;
+      border-radius: 4px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: all var(--transition);
+      border: 2px solid transparent;
+    }
+    .gallery-picker img:hover,
+    .gallery-picker img.selected {
+      opacity: 1;
+      border-color: var(--blue);
+      transform: scale(1.05);
+    }
+
+    /* Auth Screen */
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--blue-dark);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .auth-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .auth-card img { width: 75px; height: 75px; border-radius: 12px; margin-bottom: 1rem; }
+    .auth-card h2 { font-family: 'Oswald', sans-serif; color: var(--blue); font-size: 1.6rem; margin-bottom: 0.5rem; }
+    .auth-card p { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; }
+    .auth-card input {
+      width: 100%;
+      padding: 0.85rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1.1rem;
+      text-align: center;
+      letter-spacing: 3px;
+      margin-bottom: 1.2rem;
+    }
+    .auth-card button {
+      width: 100%;
+      background: var(--yellow);
+      color: var(--blue);
+      border: none;
+      padding: 0.9rem;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .sql-code-box {
+      background: #1e293b;
+      color: #38bdf8;
+      padding: 1.2rem;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      overflow-x: auto;
+      margin: 1rem 0;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Login Gate -->
+<div id="authGate" class="auth-overlay">
+  <div class="auth-card">
+    <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg" alt="SMAPEC">
+    <h2>Espace Administration</h2>
+    <p>Accès réservé à la direction SMAPEC pour la gestion des prix et du catalogue.</p>
+    <form onsubmit="event.preventDefault(); checkAuth();">
+      <input type="password" id="authPin" placeholder="Code secret ou PIN" required autofocus>
+      <button type="submit"><i class="fas fa-unlock-alt"></i> Déverrouiller</button>
+    </form>
+    <div style="margin-top:1rem; font-size:0.75rem; color:var(--muted)">
+      Code par défaut : <code>smapec2026</code>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Top Nav -->
+<header class="admin-nav">
+  <a href="index.html" class="admin-nav-brand">
+    <img src="https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg" alt="SMAPEC">
+    <div>
+      <h1>SMAPEC BACKOFFICE</h1>
+      <span>Gestion Produits, Prix & Devis</span>
+    </div>
+  </a>
+  <div class="admin-nav-actions">
+    <span class="admin-badge-role"><i class="fas fa-shield-alt"></i> Baye Sylla (DG)</span>
+    <a href="catalogue.html" target="_blank" style="color:white; font-size:0.85rem; text-decoration:none; display:flex; align-items:center; gap:0.4rem">
+      <i class="fas fa-external-link-alt"></i> Voir le site
+    </a>
+    <button onclick="logoutAdmin()" style="background:rgba(255,255,255,0.15); border:none; color:white; padding:0.4rem 0.8rem; border-radius:6px; cursor:pointer; font-size:0.8rem">
+      <i class="fas fa-sign-out-alt"></i>
+    </button>
+  </div>
+</header>
+
+<div class="admin-container">
+  <!-- KPIs -->
+  <div class="admin-kpis">
+    <div class="kpi-card">
+      <div class="kpi-icon"><i class="fas fa-boxes"></i></div>
+      <div class="kpi-data">
+        <h3 id="kpiTotalProducts">12</h3>
+        <p>Articles au Catalogue</p>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon"><i class="fas fa-layer-group"></i></div>
+      <div class="kpi-data">
+        <h3>6</h3>
+        <p>Catégories de Travaux</p>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon"><i class="fas fa-file-invoice"></i></div>
+      <div class="kpi-data">
+        <h3 id="kpiTotalQuotes">0</h3>
+        <p>Devis Émis</p>
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-icon"><i class="fas fa-database"></i></div>
+      <div class="kpi-data">
+        <h3 id="kpiDbStatus" style="font-size:1.1rem; color:#10b981">Actif</h3>
+        <p id="kpiDbDetail">LocalStorage / Cloud</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Tabs -->
+  <div class="admin-tabs">
+    <button class="admin-tab-btn active" onclick="switchAdminTab('productsTab', this)">
+      <i class="fas fa-th-list"></i> Catalogue & Tarifs
+    </button>
+    <button class="admin-tab-btn" onclick="switchAdminTab('quotesTab', this)">
+      <i class="fas fa-history"></i> Devis Clients
+    </button>
+    <button class="admin-tab-btn" onclick="switchAdminTab('supabaseTab', this)">
+      <i class="fas fa-cloud"></i> Synchro Supabase & SQL
+    </button>
+  </div>
+
+  <!-- TAB 1: PRODUCTS -->
+  <div id="productsTab" class="tab-content active">
+    <div class="table-card">
+      <div class="table-top">
+        <div>
+          <h2 style="font-family:'Oswald',sans-serif; font-size:1.4rem; color:var(--blue); margin:0">Articles & Barème des Prix</h2>
+          <small style="color:var(--muted)">Tous les prix saisis ici sont directement pris en compte dans le panier devis des clients.</small>
+        </div>
+        <div style="display:flex; gap:0.8rem">
+          <button class="btn-add-prod" onclick="openProductModal()">
+            <i class="fas fa-plus-circle"></i> Ajouter un Article
+          </button>
+          <button onclick="resetDefaults()" style="background:#f1f5f9; border:1px solid var(--border); padding:0.6rem 1rem; border-radius:8px; font-size:0.85rem; cursor:pointer">
+            <i class="fas fa-undo"></i> Réinitialiser
+          </button>
+        </div>
+      </div>
+
+      <div style="overflow-x:auto">
+        <table class="products-table">
+          <thead>
+            <tr>
+              <th>Aperçu</th>
+              <th>Désignation & Catégorie</th>
+              <th>Dimensions Standard</th>
+              <th>Épaisseur / Matière</th>
+              <th>Prix Unitaire</th>
+              <th style="text-align:right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="adminProductsTableBody">
+            <!-- Rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: QUOTES HISTORY -->
+  <div id="quotesTab" class="tab-content">
+    <div class="table-card">
+      <h2 style="font-family:'Oswald',sans-serif; font-size:1.4rem; color:var(--blue); margin-bottom:0.5rem">Historique des Devis Générés</h2>
+      <p style="color:var(--muted); font-size:0.85rem; margin-bottom:1.5rem">Retrouvez ici toutes les estimations créées par les visiteurs sur le site.</p>
+      <div id="adminQuotesContainer">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: SUPABASE & CONFIG -->
+  <div id="supabaseTab" class="tab-content">
+    <div class="table-card">
+      <h2 style="font-family:'Oswald',sans-serif; font-size:1.4rem; color:var(--blue); margin-bottom:0.5rem">Intégration Supabase Cloud</h2>
+      <p style="color:var(--muted); font-size:0.88rem; line-height:1.6">
+        Votre projet Supabase est déjà configuré dans <a href="js/config.js">js/config.js</a>. Pour activer la synchronisation de base de données en direct sur Supabase, exécutez simplement ce script SQL dans votre console Supabase :
+      </p>
+
+      <div class="sql-code-box" id="sqlSnippet">
+-- SMAPEC: Table des produits et politiques de sécurité
+CREATE TABLE IF NOT EXISTS public.products (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  category TEXT NOT NULL,
+  price NUMERIC DEFAULT 0,
+  height NUMERIC DEFAULT 0,
+  width NUMERIC DEFAULT 0,
+  thickness NUMERIC DEFAULT 0,
+  material TEXT,
+  image TEXT,
+  description TEXT,
+  badge TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Activation de la sécurité au niveau des lignes
+ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
+
+-- Autoriser la lecture publique pour le catalogue
+CREATE POLICY "Public Read Products" 
+ON public.products FOR SELECT USING (true);
+
+-- Autoriser l'écriture pour les opérations
+CREATE POLICY "Allow Full Access" 
+ON public.products FOR ALL USING (true);
+      </div>
+
+      <button onclick="copySqlCode()" style="background:var(--blue); color:white; border:none; padding:0.7rem 1.4rem; border-radius:8px; font-weight:700; cursor:pointer">
+        <i class="fas fa-copy"></i> Copier le Script SQL
+      </button>
+
+      <div style="margin-top:2rem; padding:1.2rem; background:#f8fafc; border-radius:8px; border-left:4px solid var(--yellow)">
+        <h4 style="margin:0 0 0.4rem; font-family:'Oswald',sans-serif">Statut actuel :</h4>
+        <p style="font-size:0.85rem; margin:0">Le système utilise actuellement un stockage hybride : dès que la table Supabase est exécutée, le catalogue se synchronisera automatiquement sans aucune modification de code.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Product Edit / Add -->
+<div id="productModal" class="modal-overlay">
+  <div class="modal-card">
+    <h3>
+      <span id="modalTitle">Ajouter un Produit</span>
+      <button onclick="closeProductModal()" style="background:none; border:none; font-size:1.2rem; cursor:pointer">&times;</button>
+    </h3>
+    <form id="productForm" onsubmit="event.preventDefault(); handleSaveProduct();">
+      <input type="hidden" id="editProdId">
+
+      <div class="form-group">
+        <label for="prodName">Désignation du Produit *</label>
+        <input type="text" id="prodName" required placeholder="Ex: Porte Blindée 5 Points ou Baie Coulissante">
+      </div>
+
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label for="prodCategory">Catégorie *</label>
+          <select id="prodCategory" required>
+            <option value="portes">Portes</option>
+            <option value="fenetres">Fenêtres</option>
+            <option value="grilles">Grilles & Balcons</option>
+            <option value="portails">Portails</option>
+            <option value="structures">Structures Métalliques</option>
+            <option value="verres">Verres & Miroirs</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="prodPrice">Prix Unitaire (FCFA) *</label>
+          <input type="number" id="prodPrice" required placeholder="Ex: 185000" min="0" step="500">
+        </div>
+      </div>
+
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label for="prodHeight">Hauteur (mètres)</label>
+          <input type="number" id="prodHeight" step="0.01" placeholder="Ex: 2.15">
+        </div>
+        <div class="form-group">
+          <label for="prodWidth">Largeur / Longueur (mètres)</label>
+          <input type="number" id="prodWidth" step="0.01" placeholder="Ex: 0.95">
+        </div>
+      </div>
+
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label for="prodThickness">Épaisseur Vitrage / Tôle (mm)</label>
+          <input type="number" id="prodThickness" step="0.5" placeholder="Ex: 8">
+        </div>
+        <div class="form-group">
+          <label for="prodMaterial">Matériau & Profilé</label>
+          <input type="text" id="prodMaterial" placeholder="Ex: Alu 45mm, Acier Galvanisé, Fer Forgé">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="prodImage">URL de l'image</label>
+        <input type="url" id="prodImage" placeholder="https://res.cloudinary.com/..." required>
+        <div style="font-size:0.75rem; color:var(--muted); margin-top:0.3rem">Ou choisissez une photo de la photothèque SMAPEC :</div>
+        <div class="gallery-picker" id="presetImagesList">
+          <!-- Preset images -->
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="prodDesc">Description & Spécifications</label>
+        <textarea id="prodDesc" rows="3" placeholder="Avantages techniques, type de serrure, isolation, peinture thermolaquée..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="prodBadge">Badge (Optionnel)</label>
+        <input type="text" id="prodBadge" placeholder="Ex: Populaire, Nouveau, Sur Mesure">
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:0.8rem; margin-top:1.5rem">
+        <button type="button" onclick="closeProductModal()" style="background:#e2e8f0; border:none; padding:0.75rem 1.2rem; border-radius:8px; font-weight:700; cursor:pointer">Annuler</button>
+        <button type="submit" style="background:var(--blue); color:white; border:none; padding:0.75rem 1.5rem; border-radius:8px; font-weight:700; cursor:pointer">
+          <i class="fas fa-save"></i> Enregistrer
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<footer class="footer" style="margin-top:3rem">
+  <div class="footer-dev">
+    Développé par <a href="https://bambatechnologies.com" target="_blank" rel="noopener">bambatechnologies.com</a>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script src="js/products.js"></script>
+<script>
+  const AUTH_KEY = 'smapec_admin_auth';
+  const PRESET_IMAGES = [
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754205/photo_2026-09-18_17-21-04_i1mftz.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754203/photo_2026-09-18_17-21-01_1_i8btyl.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754070/photo_13_2026-09-18_17-53-40_dffc6p.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754200/photo_2026-09-18_17-20-49_w52fof.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754075/photo_15_2026-09-18_17-53-40_cn0x5z.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754064/photo_17_2026-09-18_17-53-40_f85i5h.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754207/photo_2026-09-18_17-21-06_xaxzjh.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754066/photo_16_2026-09-18_17-53-40_a3kik6.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754089/photo_10_2026-09-18_17-53-40_bmtcfo.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754079/photo_14_2026-09-18_17-53-40_j52n0b.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754209/photo_2026-09-18_17-20-53_x2tbgs.jpg",
+    "https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754093/photo_9_2026-09-18_17-53-40_eap5m2.jpg"
+  ];
+
+  function checkAuth() {
+    const pin = document.getElementById('authPin').value.trim();
+    if (pin === 'smapec2026' || pin === 'admin') {
+      sessionStorage.setItem(AUTH_KEY, 'true');
+      document.getElementById('authGate').style.display = 'none';
+      initAdmin();
+    } else {
+      alert("Code PIN erroné. Veuillez réessayer.");
+    }
+  }
+
+  function logoutAdmin() {
+    sessionStorage.removeItem(AUTH_KEY);
+    location.reload();
+  }
+
+  function switchAdminTab(tabId, btn) {
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function formatFCFA(num) {
+    if (!num) return 'Sur devis';
+    return new Intl.NumberFormat('fr-FR').format(num) + ' FCFA';
+  }
+
+  async function initAdmin() {
+    const products = await loadProducts();
+    renderProductsTable(products);
+    renderPresetPicker();
+    renderQuotesHistory();
+    document.getElementById('kpiTotalProducts').textContent = products.length;
+  }
+
+  function renderPresetPicker() {
+    const container = document.getElementById('presetImagesList');
+    container.innerHTML = PRESET_IMAGES.map(img => `
+      <img src="${img}" alt="Aperçu" onclick="selectPresetImage('${img}', this)">
+    `).join('');
+  }
+
+  function selectPresetImage(url, el) {
+    document.querySelectorAll('.gallery-picker img').forEach(i => i.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('prodImage').value = url;
+  }
+
+  function renderProductsTable(products) {
+    const tbody = document.getElementById('adminProductsTableBody');
+    tbody.innerHTML = products.map(p => {
+      const dims = [];
+      if (p.height) dims.push(`H: ${p.height}m`);
+      if (p.width) dims.push(`L: ${p.width}m`);
+      const dimStr = dims.length ? dims.join(' × ') : (p.dimensions || 'Sur mesure');
+      const thickStr = p.thickness ? `${p.thickness} mm` : 'Standard';
+
+      return `
+        <tr>
+          <td><img src="${p.image || ''}" class="prod-thumb" alt="${p.name}"></td>
+          <td>
+            <strong>${p.name}</strong><br>
+            <span style="font-size:0.75rem; text-transform:uppercase; color:var(--blue); font-weight:700">${p.category}</span>
+          </td>
+          <td>${dimStr}</td>
+          <td>
+            <strong>${thickStr}</strong><br>
+            <small style="color:var(--muted)">${p.material || 'Standard'}</small>
+          </td>
+          <td><strong style="color:var(--blue); font-size:1rem">${formatFCFA(p.price)}</strong></td>
+          <td style="text-align:right">
+            <button class="action-btn edit" onclick="editProduct('${p.id}')" title="Modifier"><i class="fas fa-edit"></i></button>
+            <button class="action-btn del" onclick="deleteProductItem('${p.id}')" title="Supprimer"><i class="fas fa-trash"></i></button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  function openProductModal(prod = null) {
+    document.getElementById('productForm').reset();
+    document.querySelectorAll('.gallery-picker img').forEach(i => i.classList.remove('selected'));
+
+    if (prod) {
+      document.getElementById('modalTitle').textContent = "Modifier l'Article";
+      document.getElementById('editProdId').value = prod.id;
+      document.getElementById('prodName').value = prod.name || '';
+      document.getElementById('prodCategory').value = prod.category || 'portes';
+      document.getElementById('prodPrice').value = prod.price || 0;
+      document.getElementById('prodHeight').value = prod.height || '';
+      document.getElementById('prodWidth').value = prod.width || '';
+      document.getElementById('prodThickness').value = prod.thickness || '';
+      document.getElementById('prodMaterial').value = prod.material || '';
+      document.getElementById('prodImage').value = prod.image || '';
+      document.getElementById('prodDesc').value = prod.description || '';
+      document.getElementById('prodBadge').value = prod.badge || '';
+    } else {
+      document.getElementById('modalTitle').textContent = "Ajouter un Article";
+      document.getElementById('editProdId').value = '';
+    }
+    document.getElementById('productModal').classList.add('active');
+  }
+
+  function closeProductModal() {
+    document.getElementById('productModal').classList.remove('active');
+  }
+
+  function editProduct(id) {
+    const products = getLocalProducts();
+    const prod = products.find(p => p.id === id);
+    if (prod) openProductModal(prod);
+  }
+
+  async function deleteProductItem(id) {
+    if (confirm("Supprimer définitivement cet article du catalogue ?")) {
+      const updated = await deleteProductFromDB(id);
+      renderProductsTable(updated);
+      document.getElementById('kpiTotalProducts').textContent = updated.length;
+    }
+  }
+
+  async function handleSaveProduct() {
+    const id = document.getElementById('editProdId').value || 'prod-' + Date.now();
+    const name = document.getElementById('prodName').value.trim();
+    const category = document.getElementById('prodCategory').value;
+    const price = parseFloat(document.getElementById('prodPrice').value) || 0;
+    const height = parseFloat(document.getElementById('prodHeight').value) || 0;
+    const width = parseFloat(document.getElementById('prodWidth').value) || 0;
+    const thickness = parseFloat(document.getElementById('prodThickness').value) || 0;
+    const material = document.getElementById('prodMaterial').value.trim();
+    const image = document.getElementById('prodImage').value.trim();
+    const description = document.getElementById('prodDesc').value.trim();
+    const badge = document.getElementById('prodBadge').value.trim();
+
+    const dims = [];
+    if (height) dims.push(`H: ${height}m`);
+    if (width) dims.push(`L: ${width}m`);
+    const dimensions = dims.join(' × ');
+
+    const product = {
+      id,
+      name,
+      category,
+      price,
+      height,
+      width,
+      thickness,
+      material,
+      dimensions,
+      image,
+      description,
+      badge
+    };
+
+    const updated = await saveProductToDB(product);
+    renderProductsTable(updated);
+    document.getElementById('kpiTotalProducts').textContent = updated.length;
+    closeProductModal();
+    alert("Article enregistré avec succès !");
+  }
+
+  function resetDefaults() {
+    if (confirm("Réinitialiser le catalogue avec les articles et tarifs d'origine SMAPEC ?")) {
+      const defs = resetToDefaultProducts();
+      renderProductsTable(defs);
+      document.getElementById('kpiTotalProducts').textContent = defs.length;
+    }
+  }
+
+  function renderQuotesHistory() {
+    const history = JSON.parse(localStorage.getItem('smapec_quotes_history') || '[]');
+    document.getElementById('kpiTotalQuotes').textContent = history.length;
+    const container = document.getElementById('adminQuotesContainer');
+    if (history.length === 0) {
+      container.innerHTML = '<p style="color:var(--muted)">Aucun devis généré pour le moment.</p>';
+      return;
+    }
+    container.innerHTML = `
+      <table class="products-table">
+        <thead>
+          <tr>
+            <th>Réf Devis</th>
+            <th>Date</th>
+            <th>Client</th>
+            <th>Téléphone</th>
+            <th>Localisation</th>
+            <th>Projet</th>
+            <th style="text-align:right">Montant</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${history.map(q => `
+            <tr>
+              <td><strong>${q.id}</strong></td>
+              <td>${q.date}</td>
+              <td>${q.client}</td>
+              <td><a href="tel:${q.phone}">${q.phone}</a></td>
+              <td>${q.city}</td>
+              <td>${q.project}</td>
+              <td style="text-align:right"><strong>${formatFCFA(q.total)}</strong></td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+  }
+
+  function copySqlCode() {
+    const code = document.getElementById('sqlSnippet').textContent;
+    navigator.clipboard.writeText(code).then(() => {
+      alert("Script SQL copié dans le presse-papier ! Vous pouvez le coller dans Supabase SQL Editor.");
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    if (sessionStorage.getItem(AUTH_KEY) === 'true') {
+      document.getElementById('authGate').style.display = 'none';
+      initAdmin();
+    }
+  });
+</script>
+
+</body>
+</html>

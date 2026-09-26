@@ -110,7 +110,7 @@ function renderCartDrawer() {
   container.innerHTML = cart.map(item => `
     <div class="cart-item" data-id="${item.id}">
       <div class="cart-item-img">
-        <img src="${item.image || ''}" alt="${item.name}" onerror="this.style.display='none'">
+        <img src="${item.image || 'https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg'}" alt="${item.name}" onerror="this.onerror=null;this.src='https://res.cloudinary.com/dpw81ymi6/image/upload/v1789754194/photo_2026-09-18_17-21-10_y68vpz.jpg'">
         <div class="cart-item-cat">${item.category || ''}</div>
       </div>
       <div class="cart-item-info">

@@ -17,13 +17,15 @@ window.addEventListener('scroll', () => {
 
 // Hamburger toggle
 hamburger?.addEventListener('click', () => {
-  hamburger.classList.toggle('open');
+  const isOpen = hamburger.classList.toggle('open');
   navLinks?.classList.toggle('open');
+  document.body.style.overflow = isOpen ? 'hidden' : '';
 });
 navLinks?.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
     hamburger?.classList.remove('open');
     navLinks?.classList.remove('open');
+    document.body.style.overflow = '';
   });
 });
 

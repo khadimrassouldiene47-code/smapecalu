@@ -194,12 +194,6 @@ function injectCartDrawer() {
       </div>
     </div>
 
-    <!-- Cart FAB -->
-    <button class="cart-fab" id="cartFab" onclick="openCartDrawer()">
-      <i class="fas fa-file-invoice"></i>
-      <span class="cart-count" id="cartCountBadge" style="display:none">0</span>
-    </button>
-
     <!-- Toast -->
     <div id="cartToast" class="cart-toast">
       <i class="fas fa-check-circle"></i>

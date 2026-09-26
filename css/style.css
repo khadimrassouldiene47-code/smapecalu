@@ -233,16 +233,18 @@ ul { list-style: none; }
 }
 .hamburger span {
   display: block;
-  width: 24px;
-  height: 2px;
-  background: var(--white);
+  width: 26px;
+  height: 2.5px;
+  background: #ffffff !important;
   transition: all var(--transition);
   border-radius: 2px;
 }
-.navbar.scrolled .hamburger span { background: var(--dark); }
-.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.navbar.scrolled .hamburger span {
+  background: #ffffff !important;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); background: #ffffff !important; }
 .hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); background: #ffffff !important; }
 
 /* =========================================
    HERO
@@ -944,6 +946,8 @@ ul { list-style: none; }
   width: 52px;
   height: 52px;
   border-radius: 50%;
+  border: none;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1151,24 +1155,9 @@ ul { list-style: none; }
 }
 .cart-btn-clear:hover { border-color: #DC2626; color: #DC2626; }
 
-/* Cart FAB */
+/* Cart FAB (Désactivé pour éviter tout doublon avec floating-actions) */
 .cart-fab {
-  position: fixed; bottom: 7rem; right: 1.5rem; z-index: 700;
-  width: 54px; height: 54px; border-radius: 50%;
-  background: var(--blue); color: white;
-  border: 3px solid var(--yellow);
-  cursor: pointer; font-size: 1.3rem;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 4px 20px rgba(43,57,144,0.4);
-  transition: all 0.3s;
-}
-.cart-fab:hover { transform: scale(1.1); }
-.cart-fab .cart-count {
-  position: absolute; top: -6px; right: -6px;
-  background: var(--yellow); color: var(--blue);
-  font-size: 0.7rem; font-weight: 800;
-  width: 20px; height: 20px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
+  display: none !important;
 }
 
 /* Cart toast */
